@@ -24,9 +24,11 @@
 	},
 	"homepage": "https://github.com/lospec/discord-monster-catching-game#readme",
 	"dependencies": {
+		"@discordjs/rest": "^1.1.0",
 		"data-store": "^4.0.3",
 		"discord.js": "^13.9.0",
 		"discordjs14": "npm:discord.js@^14.3.0",
-		"dotenv": "^16.0.2"
+		"dotenv": "^16.0.2",
+		"glob": "^8.0.3"
 	}
 }
