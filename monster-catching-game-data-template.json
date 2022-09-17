@@ -8,6 +8,11 @@
 	"command": "(!monstercatchinggame|!mcg)",
 	"appearenceChance": 0.8,
 	"cooldown": 3,
+	"activeMonster": "id of the message of the current wild monster",
+	"activeMonsterName": "current wild monster's name",
+	"activeMonsterId": "current wild monster's id number",
+	"activeMonsterChannel": "the channel in which the current wild monster message was send",
+	"activeChipped": false,
 	"players": {
 		"a discord players id": {
 			"1": 243,
