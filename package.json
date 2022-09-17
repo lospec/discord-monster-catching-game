@@ -1,0 +1,30 @@
+{
+	"name": "discord-monster-catching-game",
+	"version": "1.0.0",
+	"description": "a discord-based monster catching game engine",
+	"scripts": {
+		"start": "node bot_LEGACY.js"
+	},
+	"main": "bot.js",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/lospec/discord-monster-catching-game.git"
+	},
+	"keywords": [
+		"game",
+		"discord",
+		"monster",
+		"pokemon"
+	],
+	"author": "skeddles",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/lospec/discord-monster-catching-game/issues"
+	},
+	"homepage": "https://github.com/lospec/discord-monster-catching-game#readme",
+	"dependencies": {
+		"data-store": "^4.0.3",
+		"dotenv": "^16.0.2",
+		"discord.js": "^13.9.0"
+	}
+}
