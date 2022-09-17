@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "channel": "discord channel id",
+  "adminChannel": "discord channel id that can run admin commands",
+  "signupMessageId": "id of a message that the user can react to to sign up",
+  "playerRoleId": "id of the role of people who have signed up",
+  "ballEmojiId": "emoji id for pokeball",
+  "command": "(!monstercatchinggame|!mcg)",
+  "appearenceChance": 0.8,
+  "cooldown": 3,
+  "players": {},
+  "monsters": {},
+  "monster": {}
+}
