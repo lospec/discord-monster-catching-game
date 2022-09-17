@@ -3,7 +3,8 @@
 	"version": "1.0.0",
 	"description": "a discord-based monster catching game engine",
 	"scripts": {
-		"start": "node bot_LEGACY.js"
+		"start": "node bot_LEGACY.js",
+		"startnew": "node bot.js"
 	},
 	"main": "bot.js",
 	"repository": {
@@ -24,7 +25,8 @@
 	"homepage": "https://github.com/lospec/discord-monster-catching-game#readme",
 	"dependencies": {
 		"data-store": "^4.0.3",
-		"dotenv": "^16.0.2",
-		"discord.js": "^13.9.0"
+		"discord.js": "^13.9.0",
+		"discordjs14": "npm:discord.js@^14.3.0",
+		"dotenv": "^16.0.2"
 	}
 }
