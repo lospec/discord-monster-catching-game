@@ -32,3 +32,9 @@ a discord-based monster catching game engine, used for Lozpekamon on our Discord
 - monster level up system
 - monster battle system
 - additional data storage options (database)
+- high scores list(s) with top trainers/monsters
+
+#### Commands
+
+To add a command, create a new javascript file in the `./commands` folder. This file should export the following:
+- `config` - an object (json) containing the name, description, 
