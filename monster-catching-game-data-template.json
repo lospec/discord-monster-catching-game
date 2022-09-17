@@ -23,27 +23,27 @@
 	"monsters": {
 		"1": {
 			"name": "Grinning",
-			"emoji": "<:grinning:>",
+			"emoji": ":grinning:",
 			"artist": "discord"
 		},
 		"15": {
 			"name": "Imp",
-			"emoji": "<:smiling_imp:>",
+			"emoji": ":smiling_imp:",
 			"artist": "discord"
 		},
 		"29": {
 			"name": "Ghost",
-			"emoji": "<:ghost:>",
+			"emoji": ":ghost:",
 			"artist": "discord"
 		},
 		"69": {
 			"name": "Alien",
-			"emoji": "<:alien:>",
+			"emoji": ":alien:",
 			"artist": "discord"
 		},
 		"777": {
 			"name": "Poop",
-			"emoji": "<:poop:>",
+			"emoji": ":poop:",
 			"artist": "discord"
 		}
 	}
