@@ -49,12 +49,17 @@ module.exports.config = {
 }
 ```
 
-More info: [Discord API Docs - Application Command Object](https://discord.com/developers/docs/interactions/application-commands#application-command-object)
+**More info:** [Discord API Docs - Application Command Object](https://discord.com/developers/docs/interactions/application-commands#application-command-object)
 
 ##### Command Execute Function
+A function that should be run when this command is run. Recieves `interaction` as the first argument.
 
-- `config` - an object (json) containing the name, description, 
-- `execute` - a function that should be run when this command is run. recieves `interaction` as the first argument.
+###### Example:
+```
+module.exports.execute = async function (interaction) {
+	await interaction.reply('you used a command! good for you!');
+}
+```
 
 #### Goals:
 
@@ -71,3 +76,4 @@ More info: [Discord API Docs - Application Command Object](https://discord.com/d
 - monster battle system
 - additional data storage options (database)
 - high scores list(s) with top trainers/monsters
+- economy plugin

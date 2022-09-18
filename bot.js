@@ -37,7 +37,7 @@ client.once('ready', () => {
 		.catch(err=> console.error('failed to load commands:',err))
 });
 
-
+//chat command was triggered
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 	console.log('command run:',interaction.commandName)
@@ -46,8 +46,6 @@ client.on('interactionCreate', async interaction => {
 		COMMANDS[interaction.commandName].execute(interaction);
 	else console.log('command not recognized:', interaction.commandName)
 });
-console.log()
-
 
 // Login to Discord with your client's token
 client.login(process.env.DISCORD_BOT_TOKEN);
