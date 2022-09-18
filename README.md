@@ -84,14 +84,19 @@ module.exports.execute = function (reaction, user) {
 
 #### Goals:
 
-- remove old lospecbot code (bot_LEGACY.js and game_LEGACY.js)
-- upgrade to discord.js version 14
-- separate config data, monster data and user data into separate json files
-- remove Lozpekamon specific wording and code
-- separate functions/commands into different files
+Main goal is to rewrite the legacy code into the newer version, running on discord.js 14.
 - ~~impliment real discord commands~~
-- ~~add new monster command, with image upload (popup?)~~
-- automatically mangage emojis / emoji servers
+- transfer over all old commands
+- transfer over all old reactions
+- transfer over wild monster appeared system
+- separate functions into different files
+- separate config data, monster data and user data into separate json files
+
+commands to add:
+- ~~ new monster command, with image upload (popup?)~~
+- change emoji server 
+
+future goals:
 - individual monster owning system
 - monster level up system
 - monster battle system
