@@ -34,6 +34,12 @@ module.exports.config = {
 		choices: MonsterGameConfig.get('habitats').map(h => ({name:h,value:h}))
 	},
 	{
+		name: 'type',
+		type: ApplicationCommandOptionType.String,
+		description: 'The type of animal this monster is most similar to',
+		choices: MonsterGameConfig.get('types').map(t => ({name:t,value:t}))
+	},
+	{
 		name: 'description',
 		type: ApplicationCommandOptionType.String,
 		description: 'The dex entry that talks about this species.',
@@ -49,6 +55,7 @@ module.exports.execute = async function (interaction) {
 		let artist = interaction.options.getString('artist');
 		let sprite = interaction.options.getAttachment('sprite');
 		let habitat = interaction.options.getString('habitat');
+		let type = interaction.options.getString('type');
 		let description = interaction.options.getString('description');
 
 		//add new emoji of monster
@@ -63,6 +70,7 @@ module.exports.execute = async function (interaction) {
 			emoji: '<'+newEmojiName+':'+newEmoji.id+'>'
 		}
 		if (habitat) newMonster.habitat = habitat;
+		if (type) newMonster.type = type;
 		if (description) newMonster.description = description;
 
 		MonsterGameConfig.set('monsters.'+id, newMonster);
