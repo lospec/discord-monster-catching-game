@@ -61,6 +61,27 @@ module.exports.execute = async function (interaction) {
 }
 ```
 
+#### Reactions
+
+To add a reaction, create a new javascript file in the `./reactions` folder. This file should export a `config` object and a `execute` function.
+
+##### Reaction Config
+
+An object (json) containing the information used to listen for the reaction
+
+##### Reaction Execute Function
+A function that should be run when this reaction is used. Recieves `reaction` and `user` as arguments.
+
+###### Example:
+```
+module.exports.execute = function (reaction, user) {
+	console.log('the test reaction was triggered');
+}
+```
+
+###### Properties:
+- emojiId - the discord id # for the emoji 
+
 #### Goals:
 
 - remove old lospecbot code (bot_LEGACY.js and game_LEGACY.js)
