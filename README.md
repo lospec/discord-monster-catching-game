@@ -18,6 +18,44 @@ a discord-based monster catching game engine, used for Lozpekamon on our Discord
 
 ### Development
 
+#### Commands
+
+To add a command, create a new javascript file in the `./commands` folder. This file should export a `config` object and a `execute` function.
+
+##### Command Config
+
+An object (json) containing the information used to create the command.
+
+###### Properties:
+- name - the name of the command, that the user will type in
+- description - the description text shown to the user when selecting a command
+- type - the type of command, stored in the global `ApplicationCommandType`, either `ChatInput`, `User`, or `Message`
+- options - an array of additional inputs for your command (optional)
+
+The options also have a type which describe what kind of data the user can submit. [list of ApplicationCommandOptionTypes](https://discord-api-types.dev/api/discord-api-types-v10/enum/ApplicationCommandOptionType)
+
+###### Example:
+```
+module.exports.config = {
+	name: 'my-command',
+	description: 'what my command does',
+	type: ApplicationCommandType.ChatInput,
+	options: [
+		name: 'input name',
+		type: ApplicationCommandOptionType.String,
+		description: 'description of input shown to user',
+		required: true 
+	]
+}
+```
+
+More info: [Discord API Docs - Application Command Object](https://discord.com/developers/docs/interactions/application-commands#application-command-object)
+
+##### Command Execute Function
+
+- `config` - an object (json) containing the name, description, 
+- `execute` - a function that should be run when this command is run. recieves `interaction` as the first argument.
+
 #### Goals:
 
 - remove old lospecbot code (bot_LEGACY.js and game_LEGACY.js)
@@ -33,8 +71,3 @@ a discord-based monster catching game engine, used for Lozpekamon on our Discord
 - monster battle system
 - additional data storage options (database)
 - high scores list(s) with top trainers/monsters
-
-#### Commands
-
-To add a command, create a new javascript file in the `./commands` folder. This file should export the following:
-- `config` - an object (json) containing the name, description, 
