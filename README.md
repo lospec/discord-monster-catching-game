@@ -85,7 +85,9 @@ module.exports.execute = function (reaction, user) {
 #### Goals:
 
 Main goal is to rewrite the legacy code into the newer version, running on discord.js 14.
+- ~~create new discord.js v14 bot~~
 - ~~impliment real discord commands~~
+- ~~impliment reaction system~~
 - transfer over all old commands
 - transfer over all old reactions
 - transfer over wild monster appeared system
@@ -93,7 +95,7 @@ Main goal is to rewrite the legacy code into the newer version, running on disco
 - separate config data, monster data and user data into separate json files
 
 commands to add:
-- ~~ new monster command, with image upload (popup?)~~
+- ~~new monster command, with image upload (popup?)~~
 - change emoji server 
 
 future goals:
