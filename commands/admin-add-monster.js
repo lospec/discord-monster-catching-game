@@ -31,6 +31,7 @@ module.exports.config = {
 		name: 'habitat',
 		type: ApplicationCommandOptionType.String,
 		description: 'The main biome where this species is found.',
+		choices: MonsterGameConfig.get('habitats').map(h => ({name:h,value:h}))
 	},
 	{
 		name: 'description',
