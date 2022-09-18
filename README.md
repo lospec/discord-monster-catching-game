@@ -18,17 +18,90 @@ a discord-based monster catching game engine, used for Lozpekamon on our Discord
 
 ### Development
 
+#### Commands
+
+To add a command, create a new javascript file in the `./commands` folder. This file should export a `config` object and a `execute` function.
+
+##### Command Config
+
+An object (json) containing the information used to create the command.
+
+###### Properties:
+- name - the name of the command, that the user will type in
+- description - the description text shown to the user when selecting a command
+- type - the type of command, stored in the global `ApplicationCommandType`, either `ChatInput`, `User`, or `Message`
+- options - an array of additional inputs for your command (optional)
+
+The options also have a type which describe what kind of data the user can submit. [list of ApplicationCommandOptionTypes](https://discord-api-types.dev/api/discord-api-types-v10/enum/ApplicationCommandOptionType)
+
+###### Example:
+```
+module.exports.config = {
+	name: 'my-command',
+	description: 'what my command does',
+	type: ApplicationCommandType.ChatInput,
+	options: [
+		name: 'input name',
+		type: ApplicationCommandOptionType.String,
+		description: 'description of input shown to user',
+		required: true 
+	]
+}
+```
+
+**More info:** [Discord API Docs - Application Command Object](https://discord.com/developers/docs/interactions/application-commands#application-command-object)
+
+##### Command Execute Function
+A function that should be run when this command is run. Recieves `interaction` as the first argument.
+
+###### Example:
+```
+module.exports.execute = async function (interaction) {
+	await interaction.reply('you used a command! good for you!');
+}
+```
+
+#### Reactions
+
+To add a reaction, create a new javascript file in the `./reactions` folder. This file should export a `config` object and a `execute` function.
+
+##### Reaction Config
+
+An object (json) containing the information used to listen for the reaction
+
+##### Reaction Execute Function
+A function that should be run when this reaction is used. Recieves `reaction` and `user` as arguments.
+
+###### Example:
+```
+module.exports.execute = function (reaction, user) {
+	console.log('the test reaction was triggered');
+}
+```
+
+###### Properties:
+- emojiId - the discord id # for the emoji 
+
 #### Goals:
 
-- remove old lospecbot code (bot_LEGACY.js and game_LEGACY.js)
-- upgrade to discord.js version 14
+Main goal is to rewrite the legacy code into the newer version, running on discord.js 14.
+- ~~create new discord.js v14 bot~~
+- ~~impliment real discord commands~~
+- ~~impliment reaction system~~
+- transfer over all old commands
+- transfer over all old reactions
+- transfer over wild monster appeared system
+- separate functions into different files
 - separate config data, monster data and user data into separate json files
-- remove Lozpekamon specific wording and code
-- separate functions/commands into different files
-- impliment real discord commands
-- add new monster command, with image upload (popup?)
-- automatically mangage emojis / emoji servers
+
+commands to add:
+- ~~new monster command, with image upload (popup?)~~
+- change emoji server 
+
+future goals:
 - individual monster owning system
 - monster level up system
 - monster battle system
 - additional data storage options (database)
+- high scores list(s) with top trainers/monsters
+- economy plugin
