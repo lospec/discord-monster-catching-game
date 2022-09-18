@@ -26,15 +26,15 @@ if (!process.env.DISCORD_BOT_TOKEN) {
 
 //const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'], intents: [
-	Discord.Intents.FLAGS.GUILDS, 
-	Discord.Intents.FLAGS.GUILD_BANS, 
-	Discord.Intents.FLAGS.GUILD_EMOJIS_AND_STICKERS, 
-	Discord.Intents.FLAGS.GUILD_VOICE_STATES, 
-	Discord.Intents.FLAGS.GUILD_MESSAGES,
-	Discord.Intents.FLAGS.GUILD_MESSAGE_REACTIONS,
-	Discord.Intents.FLAGS.GUILD_MEMBERS,
-	Discord.Intents.FLAGS.DIRECT_MESSAGES,
-	Discord.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
+	Discord.GatewayIntentBits.Guilds, 
+	Discord.GatewayIntentBits.GuildBans,
+	Discord.GatewayIntentBits.GuildEmojisAndStickers, 
+	Discord.GatewayIntentBits.GuildVoiceStates,
+	Discord.GatewayIntentBits.GuildMessages,
+	Discord.GatewayIntentBits.GuildMessageReactions,
+	Discord.GatewayIntentBits.GuildMembers,
+	Discord.GatewayIntentBits.DirectMessages,
+	Discord.GatewayIntentBits.DirectMessageReactions
 ]});
 
 ////////////////////////////////////////////////////////////////////////////////

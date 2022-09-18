@@ -11,7 +11,7 @@
 	"activeMonster": "id of the message of the current wild monster",
 	"activeMonsterName": "current wild monster's name",
 	"activeMonsterId": "current wild monster's id number",
-	"activeMonsterChannel": "the channel in which the current wild monster message was send",
+	"activeMonsterChannel": "the channel in which the current wild monster message was sent",
 	"activeChipped": false,
 	"serverGuildId": "your discord server id",
 	"emojiServerId": "the discord server the emojis should be added to (can be same as above)",
