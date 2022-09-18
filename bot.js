@@ -47,7 +47,7 @@ client.once('ready', () => {
 //chat command was triggered
 client.on('interactionCreate', async interaction => {
 	if (!interaction.isChatInputCommand()) return;
-	console.log('command run:',interaction.commandName)
+	console.log('command run:', interaction.commandName)
 
 	if (COMMANDS[interaction.commandName])
 		COMMANDS[interaction.commandName].execute(interaction);
@@ -58,13 +58,13 @@ client.on('interactionCreate', async interaction => {
 client.on('messageReactionAdd', async (reaction, user) => {
 	try {
 		if (reaction.partial) await reaction.fetch();
-		console.log('reaction on message',reaction.message.id, 'with',reaction._emoji?.id);
-
-		if (!reaction.message.channelId == MonsterGameConfig.get('serverGuildId')) return;
-		if (!REACTIONS[reaction._emoji.id]) return;
+		console.log('reaction on message',reaction.message.id, 'with',reaction._emoji?.id ?? reaction.emoji.name);
+		
+		if (!reaction.message.channelId == MonsterGameConfig.get('channel')) return;
+		if (!REACTIONS[reaction._emoji?.id ?? reaction.emoji.name]) return;
 
 		//emoji matched, execute reaction function
-		REACTIONS[reaction._emoji.id].execute(reaction, user);
+		REACTIONS[reaction._emoji?.id ?? reaction.emoji.name].execute(reaction, user);
 	} 
 	catch (error) {console.error('Something went wrong when fetching the reaction:', error);}
 });
