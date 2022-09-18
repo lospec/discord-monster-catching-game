@@ -68,8 +68,8 @@ module.exports.execute = async function (interaction) {
 - separate config data, monster data and user data into separate json files
 - remove Lozpekamon specific wording and code
 - separate functions/commands into different files
-- impliment real discord commands
-- add new monster command, with image upload (popup?)
+- ~~impliment real discord commands~~
+- ~~add new monster command, with image upload (popup?)~~
 - automatically mangage emojis / emoji servers
 - individual monster owning system
 - monster level up system
