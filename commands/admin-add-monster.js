@@ -61,7 +61,7 @@ module.exports.execute = async function (interaction) {
 		if (MonsterGameConfig.get('monsters.'+id)) throw 'A monster with ID '+id+' already exists. Choose a different ID, or modify that monster.';
 
 		//add new emoji of monster
-		let guild = await MonsterGameClient.guilds.fetch(MonsterGameConfig.get('serverGuildId'))
+		let guild = await MonsterGameClient.guilds.fetch(MonsterGameConfig.get('emojiServerId'))
 		let newEmojiName = id+'_'+name.replace(/\s/g,'');
 		let newEmoji = await guild.emojis.create({ attachment: sprite.url, name:  newEmojiName});
 
