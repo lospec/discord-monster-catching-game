@@ -1,3 +1,5 @@
+import { MonsterGameConfig } from "../bot.js";
+
 const INTROTEXT = `\`\`\`
 Hello there! Welcome to the world of Lozpekamon!
 Lozpekistan is inhabited by creatures called Lozpekamon!
@@ -46,11 +48,11 @@ https://skeddles.itch.io/lozpekistan-monster-farm
 
 \`\`\``;
 
-module.exports.config = {
+export const config = {
 	emojiId: MonsterGameConfig.get('ballEmojiId')
 }
 
-module.exports.execute = function (reaction, user) {
+export const execute = function (reaction, user) {
     //If it is on the signup message, add the role
     if (MonsterGameConfig.get('signupMessageId') == reaction.message.id) {
         //add user to the signup list

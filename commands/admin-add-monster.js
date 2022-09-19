@@ -1,4 +1,7 @@
-module.exports.config = {
+import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
+import { MonsterGameConfig } from '../bot.js';
+
+export const config = {
 	type: ApplicationCommandType.ChatInput,
 	name: 'add-monster',
 	description: 'create a new lozpekamon',
@@ -47,7 +50,7 @@ module.exports.config = {
 	]
 }
 
-module.exports.execute = async function (interaction) {
+export const execute = async function (interaction) {
 	
 	try {
 		let name = interaction.options.getString('name');

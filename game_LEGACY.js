@@ -10,12 +10,12 @@ const CMD = monsterCatcherData.get('command') || '!monster';
 const CHANNEL = monsterCatcherData.get("channel");
 var ADMINCHANNEL = monsterCatcherData.get("adminChannel");
 
-const getRarity = require('./calculate-rarity.js');
-const raristRarity = Math.max(...Object.keys(monsterCatcherData.get('monsters')).map(id=>getRarity(id)))
+const getRarity = require('./utilities/calculate-rarity.js');
+const rarestRarity = Math.max(...Object.keys(monsterCatcherData.get('monsters')).map(id=>getRarity(id)))
 
 var Pool = [];
 Object.keys(monsterCatcherData.get('monsters')).forEach (id => {
-	let numberOfSpawns = Math.pow(2, raristRarity - getRarity(id));
+	let numberOfSpawns = Math.pow(2, rarestRarity - getRarity(id));
 	let lastNumber = Pool.length == 0? 0 : Pool[Pool.length-1].weight;
 	Pool.push({id: id, rarity: getRarity(id), spawns: numberOfSpawns, weight: lastNumber + numberOfSpawns});
 });
@@ -157,34 +157,6 @@ function spawn(spawnId) {
 		}).catch(e=>console.warn);
 }
 
-
-function removeMonsterMessage(caught) {
-	if (!monsterCatcherData.get('activeMonster')) return;
-
-	let channelid = monsterCatcherData.get('activeMonsterChannel');
-	let messageid = monsterCatcherData.get('activeMonster')
-
-	//reset active monster
-	monsterCatcherData.set('activeMonster',false);
-	clearTimeout(runawayTimer);
-
-	console.log('deleting message',channelid,messageid)
-	//fetch channel
-	client.channels.fetch(channelid)
-		.then(channel => {
-
-			//fetch message
-			channel.messages.fetch(messageid)
-			    .then(message => {
-					//message.delete();
-					if (caught)	message.edit('<:Caughtzpekamon:841091921295310860>');
-					else message.edit('<:Nozpekamon:841000792097423391>');
-					console.log('deleted message')
-			    })
-			    .catch(console.error)
-		})
-		.catch(e=>console.error);
-}
 
 //every 0-5 minutes, it checks if there's a monster active, and if so makes it run away
 function runAway () {
@@ -446,8 +418,8 @@ new Module('pocket monsters use monster ball', 'react', {}, function (message,us
 
 		//too difficult (extra auto lose)
 		let difficulty = getRarity(mId);
-		console.log('chance to miss',difficulty,'/',(raristRarity+1), '=', (difficulty/(raristRarity+1))*0.5)
-		if (Math.random()+NBallModifier < (difficulty/(raristRarity+1))*0.5) {
+		console.log('chance to miss',difficulty,'/',(rarestRarity+1), '=', (difficulty/(rarestRarity+1))*0.5)
+		if (Math.random()+NBallModifier < (difficulty/(rarestRarity+1))*0.5) {
 
 			let text;
 

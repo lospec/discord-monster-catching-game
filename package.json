@@ -30,5 +30,6 @@
 		"discordjs14": "npm:discord.js@^14.3.0",
 		"dotenv": "^16.0.2",
 		"glob": "^8.0.3"
-	}
+	},
+	"type": "module"
 }
