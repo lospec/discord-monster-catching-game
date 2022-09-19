@@ -1,4 +1,3 @@
-import getRarity from './calculate-rarity.js';
 import { Pool } from '../bot.js';
 
 export default function pickRandom() {
