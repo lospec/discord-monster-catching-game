@@ -251,7 +251,7 @@ new Module('pocket monsters use bonk', 'react', {}, function (message,user,react
 
 
 //react with bonk (easter egg)
-new Module('pocket monsters use bonk', 'react', {}, function (message,user,reaction) {
+new Module('pocket monsters use wave', 'react', {}, function (message,user,reaction) {
     
 	let activeMonster = monsterCatcherData.get('activeMonster');
 	let mName =  monsterCatcherData.get('activeMonsterName').toUpperCase();

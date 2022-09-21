@@ -1,4 +1,6 @@
-import { MonsterGameConfig } from '../bot.js';
+import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
+import randomElement from './random-element.js';
+import removeMonsterMessage from './remove-message.js';
 
 export default function runAway () {
 	console.log('runaway')
@@ -8,7 +10,7 @@ export default function runAway () {
 	let channelid = MonsterGameConfig.get('activeMonsterChannel');
 
 
-	let text = random([
+	let text = randomElement([
 		'The wild '+mName+' got spooked and ran off!',
 		'The wild '+mName+' wandered off...',
 		'The wild '+mName+' wandered away...',
@@ -24,7 +26,7 @@ export default function runAway () {
 
 	removeMonsterMessage();
 
-	client.channels.fetch(channelid)
+	MonsterGameClient.channels.fetch(channelid)
 		.then(channel => {
 			channel.send('` '+text+' `');
 		}).catch(console.warn);

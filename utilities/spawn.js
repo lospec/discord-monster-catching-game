@@ -1,12 +1,13 @@
 import { MonsterGameConfig, MonsterGameClient, runawayTimer } from '../bot.js';
 import removeMonsterMessage from '../utilities/remove-message.js';
 import runAway from './runaway.js';
+import randomElement from './random-element.js';
 
 //spawn a monster (maybe)
 export default function spawn(monster, channelId) {
     console.log('spawning',monster.name,'in',channelId);
 	let monsterSendChannel = channelId ?? MonsterGameConfig.get('channel');
-	if (Math.random() < -1) monsterSendChannel = random(MonsterGameConfig.get('leakChannels'));
+	if (Math.random() < -1) monsterSendChannel = randomElement(MonsterGameConfig.get('leakChannels'));
 
 	//send it
 	MonsterGameClient.channels.fetch(monsterSendChannel)
