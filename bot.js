@@ -38,11 +38,20 @@ glob.sync('./commands/*.js').forEach(command =>
 
 //load reactions
 let REACTIONS = {};
-glob.sync('./reactions/*.js').forEach(reaction =>
-	import(reaction).then(obj => {
-		REACTIONS[obj.config.emojiId] = obj;
+glob.sync('./reactions/*.js').forEach(reactionFile =>
+	import(reactionFile).then(reaction => {
+		let name = reactionFile.replace('./reactions/','').replace('.js','');
+		let emojiId = MonsterGameConfig.get('reactionEmojis.'+name);
+		if (!emojiId) return; 
+
+		REACTIONS[emojiId] = {
+			name: name,
+			emojiId: emojiId,
+			execute: reaction.execute
+		};
 	})
 );
+
 
 console.log('starting bot...')
 if (!process.env.DISCORD_BOT_TOKEN) {console.log('Your discord bot token was not found.'); process.exit();}
@@ -62,7 +71,7 @@ client.once('ready', () => {
 
 	//load commands
 	rest.put(DiscordRestRoutes.applicationGuildCommands(client.user.id,MonsterGameConfig.get('serverGuildId')), {body: commandList} )
-		.then(e => console.log('loaded '+commandList.length+' commands'))
+		.then(e => console.log('loaded ',commandList.length,' commands'))
 		.catch(err=> console.error('failed to load commands:',err))
 });
 
@@ -80,10 +89,12 @@ client.on('interactionCreate', async interaction => {
 client.on('messageReactionAdd', async (reaction, user) => {
 	try {
 		if (reaction.partial) await reaction.fetch();
-		let emoji = reaction._emoji?.id ?? reaction.emoji.name;
-		console.log('reaction on message',reaction.message.id, 'with',emoji);
-
 		if (!reaction.message.channelId == MonsterGameConfig.get('channel')) return;
+
+		let emoji = reaction._emoji?.id ?? reaction.emoji.name;
+		console.log('reaction on message',reaction.message.id, 'with',emoji,!REACTIONS[emoji]?'(not matched)':REACTIONS[emoji].name);
+
+		
 		if (!REACTIONS[emoji]) return;
 
 		//emoji matched, execute reaction function

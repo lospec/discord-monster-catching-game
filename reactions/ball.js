@@ -51,10 +51,6 @@ https://skeddles.itch.io/lozpekistan-monster-farm
 
 \`\`\``;
 
-export const config = {
-	emojiId: MonsterGameConfig.get('ballEmojiId')
-}
-
 export const execute = function (reaction, user) {
     //If it is on the signup message, add the role
     if (MonsterGameConfig.get('signupMessageId') == reaction.message.id) {
@@ -81,8 +77,8 @@ export const execute = function (reaction, user) {
         let uName = user.username.toUpperCase();
 
         
-        const Ball = MonsterGameConfig.get('ballEmojiId');
-        const NBall = MonsterGameConfig.get('nitroBallEmojiId');
+        const Ball = MonsterGameConfig.get('reactionEmojis.ball');
+        const NBall = MonsterGameConfig.get('reactionEmojis.nitroBall'); 
 
         //exit if the emoji used wasn't the right one
         // if (reaction._emoji.id !== Ball && reaction._emoji.id !== NBall ) {
@@ -105,7 +101,9 @@ export const execute = function (reaction, user) {
             console.log('NBALL',user.username,reaction._emoji.id == NBall,isNitroBooster,NBallModifier);
 
             //some text that might be used in the message generation
-            let ball = reaction._emoji.id == NBall ? 'NITROBALL' : 'LOZPEKABALL';
+			//TODO: nitroball is broken cause only the ball emoji will match this file
+            //let ball = reaction._emoji.id == NBall ? 'NITROBALL' : 'LOZPEKABALL';
+            let ball = 'LOZPEKABALL';
             let runaway = randomElement(['ran off', 'got away', 'fled', 'turned and ran', 'left', 'ran away','walked away', 'walked off', 'bounced']);
             let grunt = randomElement(['Team PixelJoint grunt', 'PixelPalace grunt', 'PixelDailies grunt']);
             //let NBallModifier = 0;
