@@ -144,7 +144,7 @@ export const execute = function (reaction, user) {
                     ]);
                 }
 
-                reaction.message.channel.send(/*message,*/'<:Lozpekaball_Missed:837769252852465794> ` '+text+' `');
+                reaction.message.channel.send('<:Lozpekaball_Missed:837769252852465794> ` '+text+' `');
             }
 
 
