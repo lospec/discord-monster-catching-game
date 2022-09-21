@@ -80,13 +80,14 @@ client.on('interactionCreate', async interaction => {
 client.on('messageReactionAdd', async (reaction, user) => {
 	try {
 		if (reaction.partial) await reaction.fetch();
-		console.log('reaction on message',reaction.message.id, 'with',reaction._emoji?.id ?? reaction.emoji.name);
-		
+		let emoji = reaction._emoji?.id ?? reaction.emoji.name;
+		console.log('reaction on message',reaction.message.id, 'with',emoji);
+
 		if (!reaction.message.channelId == MonsterGameConfig.get('channel')) return;
-		if (!REACTIONS[reaction._emoji?.id ?? reaction.emoji.name]) return;
+		if (!REACTIONS[emoji]) return;
 
 		//emoji matched, execute reaction function
-		REACTIONS[reaction._emoji?.id ?? reaction.emoji.name].execute(reaction, user);
+		REACTIONS[emoji].execute(reaction, user);
 	} 
 	catch (error) {console.error('Something went wrong when fetching the reaction:', error);}
 });
