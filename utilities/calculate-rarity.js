@@ -1,3 +1,3 @@
 export default function (id) {
-	return 1 + Math.floor(id / 10);
+	return 1 + Math.floor(id / 100);
 }

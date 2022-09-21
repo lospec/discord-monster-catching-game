@@ -61,6 +61,7 @@ export const execute = async function (interaction) {
 		let type = interaction.options.getString('type');
 		let description = interaction.options.getString('description');
 
+		if (id > 9999) throw 'ID numbers must be between 1 and 9999';
 		if (MonsterGameConfig.get('monsters.'+id)) throw 'A monster with ID '+id+' already exists. Choose a different ID, or modify that monster.';
 
 		//add new emoji of monster
