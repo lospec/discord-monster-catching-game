@@ -3,7 +3,7 @@ import { MonsterGameConfig, REACTIONS } from '../bot.js';
 import glob from 'glob';
 
 const REACTION_NAMES = glob.sync('./reactions/*.js').map(r => r.replace('./reactions/','').replace('.js','')).map(h => ({name:h,value:h}));
-console.log(REACTION_NAMES)
+
 export const config = {
 	type: ApplicationCommandType.ChatInput,
 	name: 'set-reaction-emoji',
@@ -26,7 +26,6 @@ export const config = {
 }
 
 export const execute = async function (interaction) {
-	console.log('oh shit set an emojo',interaction.options.getString('target-emoji'),  interaction.options.getString('new-emoji'))
 	try {
 		let targetEmoji = interaction.options.getString('target-emoji');
 		let newEmoji = interaction.options.getString('new-emoji').trim();
