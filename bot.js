@@ -51,6 +51,8 @@ glob.sync('./reactions/*.js').forEach(reactionFile =>
 		};
 	})
 );
+export {REACTIONS as REACTIONS}
+
 
 
 console.log('starting bot...')
