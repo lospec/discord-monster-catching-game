@@ -109,5 +109,5 @@ client.on('messageReactionAdd', async (reaction, user) => {
 client.login(process.env.DISCORD_BOT_TOKEN);
 
 //randomly spawn a monster
-setInterval(spawn, 1000 * 60 * MonsterGameConfig.get('cooldown') * (1.25 - Math.random()*0.5), monsters[pickRandom()], MonsterGameConfig.get('channel'));
+setInterval(spawn, 1000 * 60 * MonsterGameConfig.get('cooldown') * (1.25 - Math.random()*0.5), pickRandom(), MonsterGameConfig.get("channel"));
 

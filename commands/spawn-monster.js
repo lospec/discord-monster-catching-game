@@ -24,11 +24,8 @@ export const config = {
 }
 
 export const execute = async function(interaction) {
-    let spawnId = interaction.options.getInteger('id');
-    let monsters = MonsterGameConfig.get('monsters');
+    let spawnId = interaction.options.getInteger('id') ?? pickRandom();
 	let channelId = interaction.options.getString('channel') ?? MonsterGameConfig.get('channel');
     //pick a random monster
-    let monster = spawnId ? monsters[spawnId] : monsters[pickRandom()];
-    console.log('spawning',monster.name,'in',channelId);
-    spawn(monster, channelId);
+    spawn(spawnId, channelId);
 }
