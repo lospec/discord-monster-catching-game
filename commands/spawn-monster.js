@@ -28,4 +28,5 @@ export const execute = async function(interaction) {
 	let channelId = interaction.options.getString('channel') ?? MonsterGameConfig.get('channel');
     //pick a random monster
     spawn(spawnId, channelId);
+	await interaction.reply('Spawned monster with ID ' + spawnId + ' in channel ' + channelId);
 }

@@ -86,12 +86,12 @@ module.exports.execute = function (reaction, user) {
 
 Main goal is to rewrite the legacy code into the newer version, running on discord.js 14.
 - ~~create new discord.js v14 bot~~
-- ~~impliment real discord commands~~
-- ~~impliment reaction system~~
+- ~~implement real discord commands~~
+- ~~implement reaction system~~
 - transfer over all old commands
-- transfer over all old reactions
-- transfer over wild monster appeared system
-- separate functions into different files
+- ~~transfer over all old reactions~~
+- ~~transfer over wild monster appeared system~~
+- ~~separate functions into different files~~
 - separate config data, monster data and user data into separate json files
 
 commands to add:
