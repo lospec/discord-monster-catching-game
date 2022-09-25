@@ -2,10 +2,13 @@ import { MonsterGameConfig, MonsterGameClient, runawayTimer } from '../bot.js';
 import removeMonsterMessage from '../utilities/remove-message.js';
 import runAway from './runaway.js';
 import randomElement from './random-element.js';
+import pickRandom from './pick-random.js';
 
 //spawn a monster (maybe)
-export default function spawn(monster, channelId) {
-    console.log('spawning',monster.name,'in',channelId);
+export default function spawn(spawnId, channelId) {
+    let monsters = MonsterGameConfig.get('monsters');
+    let monster = spawnId ? monsters[spawnId] : monsters[pickRandom()];
+    console.log('spawning', monster.name, 'in', channelId);
 	let monsterSendChannel = channelId ?? MonsterGameConfig.get('channel');
 	if (Math.random() < -1) monsterSendChannel = randomElement(MonsterGameConfig.get('leakChannels'));
 
@@ -21,7 +24,7 @@ export default function spawn(monster, channelId) {
             channel.send(monster.emoji).then(monsterMessage => {
                 MonsterGameConfig.set('activeMonster',monsterMessage.id);
                 MonsterGameConfig.set('activeMonsterName',monster.name);
-                MonsterGameConfig.set('activeMonsterId',monster.id);
+                MonsterGameConfig.set('activeMonsterId', spawnId);
                 MonsterGameConfig.set('activeMonsterChannel',monsterSendChannel);
                 MonsterGameConfig.set('activeChipped',false);
 

@@ -18,5 +18,5 @@ export const config = {
 }
 export const execute = async function(interaction) {
     removeMonsterMessage(interaction.options.getBoolean('caught'));
-	
+	await interaction.reply({ content: 'Removed the active monster message', epheremal: true });
 }

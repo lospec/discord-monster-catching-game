@@ -1,4 +1,4 @@
-import { MonsterGameConfig, rarestRarity, MonsterGameClient } from "../bot.js";
+import { MonsterGameConfig, rarestRarity } from "../bot.js";
 import randomElement from "../utilities/random-element.js";
 import getRarity from "../utilities/calculate-rarity.js";
 import removeMonsterMessage from "../utilities/remove-message.js";
