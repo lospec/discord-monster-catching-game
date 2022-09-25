@@ -1,7 +1,6 @@
 import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
-import { MONSTERS,runawayTimer,MonsterStore } from '../monsters.js';
+import { setRunaway, MonsterStore } from '../monsters.js';
 import removeMonsterMessage from '../utilities/remove-message.js';
-import runAway from './runaway.js';
 import randomElement from './random-element.js';
 import pickRandom from './pick-random.js';
 

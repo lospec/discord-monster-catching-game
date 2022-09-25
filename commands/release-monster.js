@@ -2,6 +2,7 @@ import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs1
 import runAway from "../utilities/runaway.js";
 import { MonsterGameConfig } from "../bot.js";
 import spawn from '../utilities/spawn.js';
+import { MonsterStore } from '../monsters.js';
 
 export const config = {
 	type: ApplicationCommandType.ChatInput,
@@ -19,7 +20,7 @@ export const execute = async function(interaction) {
   	let monsterId = interaction.options.getInteger('monster-id');
 
 	//make sure monster exists and player has it
-	if (!MonsterGameConfig.has('monsters.'+monsterId)) {
+	if (!MonsterStore.has(monsterId.toString())) {
         return await interaction.reply({content: '` LOZPEKAMON NOT FOUND `', ephemeral: true });
     } 
 	if (!MonsterGameConfig.has('players.'+interaction.user.id+'.'+monsterId)) {
@@ -29,7 +30,7 @@ export const execute = async function(interaction) {
 	//if theres already an active monster, make it run away
 	runAway();
 
-	let monster = MonsterGameConfig.get('monsters.'+monsterId);
+	let monster = MonsterStore.get(monsterId.toString());
 
 	//decrement players's monster count
 	let monsterPath = 'players.'+interaction.user.id+'.'+monsterId;

@@ -1,4 +1,5 @@
 import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
+import { MonsterStore } from '../monsters.js';
 import randomElement from './random-element.js';
 import removeMonsterMessage from './remove-message.js';
 
@@ -18,9 +19,9 @@ export default function runAway() {
 			'The released '+mName+' ran off.',
 			'The released '+mName+' went happily on it\'s way.',
 		]);
-		let monsterReleasedPath = 'monsters.'+monsterId+'.released';
-		if (!MonsterGameConfig.has(monsterReleasedPath)) MonsterGameConfig.set(monsterReleasedPath, 1);
-		else MonsterGameConfig.set(monsterReleasedPath, MonsterGameConfig.get(monsterReleasedPath) + 1);
+		let monsterReleasedPath = monsterId+'.released';
+		if (!MonsterStore.has(monsterReleasedPath)) MonsterStore.set(monsterReleasedPath, 1);
+		else MonsterStore.set(monsterReleasedPath, MonsterStore.get(monsterReleasedPath) + 1);
 	}
 	else {
 		text = randomElement([

@@ -1,11 +1,15 @@
 import { Store } from 'data-store';
-import { MonsterGameClient } from './bot.js';
 import getRarity from './utilities/calculate-rarity.js';
+import runAway from './utilities/runaway.js';
 export const MonsterStore = new Store({ path: './_data/monster-data.json' });
 	console.log(MonsterStore)
 	const monsters = MonsterStore.get();
 export const rarestRarity = Math.max(...Object.keys(MonsterStore.get()).map(id=>getRarity(id)));
 export var runawayTimer;
+export function setRunaway(length) {
+	clearTimeout(runawayTimer);
+	runawayTimer = setTimeout(runAway, length);
+}
 
 export const MONSTERS = {};
 export const monstersAutocomplete = [];

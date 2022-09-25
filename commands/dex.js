@@ -1,6 +1,6 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 import { MonsterGameConfig } from '../bot.js';
-import { MONSTERS } from '../monsters.js';
+import { MonsterStore } from '../monsters.js';
 
 export const config = {
 	name: 'dex', 
@@ -16,7 +16,7 @@ export const config = {
 export const execute = async function (interaction) {
 	let id = interaction.options.getInteger('id');
 
-	let monster = MonsterGameConfig.get('monsters.'+id);
+	let monster = MonsterStore.get(id.toString());
 	if (!monster) return interaction.reply({content: 'You haven\t found monster #'+id, ephemeral: true });
 
 	await interaction.reply({content: INTROTEXT, ephemeral: true });
