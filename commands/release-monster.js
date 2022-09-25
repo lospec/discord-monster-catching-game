@@ -1,6 +1,7 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 import runAway from "../utilities/runaway.js";
 import { MonsterGameConfig } from "../bot.js";
+import spawn from '../utilities/spawn.js';
 
 export const config = {
 	type: ApplicationCommandType.ChatInput,
@@ -42,8 +43,10 @@ export const execute = async function(interaction) {
 
 	// TEMP PATCH TO PREVENT THEM FROM BEING RELEASED TO OTHER PLAYERS SINCE ITS BROKEN
 			//increase the released monsters count
-	let monsterReleasedPath = 'monsters.'+monsterId+'.released';
-	if (!MonsterGameConfig.has(monsterReleasedPath)) MonsterGameConfig.set(monsterReleasedPath, 1);
-	else MonsterGameConfig.set(monsterReleasedPath, MonsterGameConfig.get(monsterReleasedPath) + 1);
-	return;
+	// let monsterReleasedPath = 'monsters.'+monsterId+'.released';
+	// if (!MonsterGameConfig.has(monsterReleasedPath)) MonsterGameConfig.set(monsterReleasedPath, 1);
+	// else MonsterGameConfig.set(monsterReleasedPath, MonsterGameConfig.get(monsterReleasedPath) + 1);
+	// return;
+
+    await spawn(monsterId, interaction.channelId, true);
 }

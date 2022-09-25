@@ -8,6 +8,7 @@ import { REST } from '@discordjs/rest';
 import { Routes as DiscordRestRoutes } from 'discord-api-types/v9';
 import { Store } from 'data-store';
 import glob from 'glob';
+import runAway from './utilities/runaway.js';
 
 dotenv.config();
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_BOT_TOKEN);
@@ -16,6 +17,9 @@ export const MonsterGameConfig = new Store({ path: './monster-catching-game-data
 export const monsters = MonsterGameConfig.get('monsters');
 export const rarestRarity = Math.max(...Object.keys(MonsterGameConfig.get('monsters')).map(id=>getRarity(id)));
 export var runawayTimer;
+export function setRunaway(length) {
+	runawayTimer = setTimeout(runAway, length);
+}
 var Pool = [];
 Object.keys(monsters).forEach (id => {
 	let numberOfSpawns = Math.pow(2, rarestRarity - getRarity(id));
