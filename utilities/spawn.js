@@ -1,4 +1,5 @@
-import { MonsterGameConfig, MonsterGameClient, runawayTimer } from '../bot.js';
+import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
+import { MONSTERS,runawayTimer,MonsterStore } from '../monsters.js';
 import removeMonsterMessage from '../utilities/remove-message.js';
 import runAway from './runaway.js';
 import randomElement from './random-element.js';
@@ -6,7 +7,7 @@ import pickRandom from './pick-random.js';
 
 //spawn a monster (maybe)
 export default function spawn(spawnId, channelId) {
-    let monsters = MonsterGameConfig.get('monsters');
+    let monsters = MonsterStore.get();
     let monster = spawnId ? monsters[spawnId] : monsters[pickRandom()];
     console.log('spawning', monster.name, 'in', channelId);
 	let monsterSendChannel = channelId ?? MonsterGameConfig.get('channel');

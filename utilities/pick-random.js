@@ -1,4 +1,4 @@
-import { Pool } from '../bot.js';
+import { Pool } from '../monsters.js';
 
 export default function pickRandom() {
 	

@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 import pickRandom from './utilities/pick-random.js';
-import getRarity from './utilities/calculate-rarity.js';
 import spawn from './utilities/spawn.js';
 import dotenv from 'dotenv';
 import { Client, GatewayIntentBits, Partials } from 'discordjs14';
@@ -8,23 +7,14 @@ import { REST } from '@discordjs/rest';
 import { Routes as DiscordRestRoutes } from 'discord-api-types/v9';
 import { Store } from 'data-store';
 import glob from 'glob';
+import { MONSTERS, monstersAutocomplete } from './monsters.js';
+
 
 dotenv.config();
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_BOT_TOKEN);
 
 export const MonsterGameConfig = new Store({ path: './monster-catching-game-data.json' });
-export const monsters = MonsterGameConfig.get('monsters');
-export const rarestRarity = Math.max(...Object.keys(MonsterGameConfig.get('monsters')).map(id=>getRarity(id)));
-export var runawayTimer;
-var Pool = [];
-Object.keys(monsters).forEach (id => {
-	let numberOfSpawns = Math.pow(2, rarestRarity - getRarity(id));
-	let lastNumber = Pool.length == 0? 0 : Pool[Pool.length-1].weight;
-	Pool.push({id: id, rarity: getRarity(id), spawns: numberOfSpawns, weight: lastNumber + numberOfSpawns});
-});
-export { 
-	Pool as Pool
-}
+
 
 //load commands
 let COMMANDS = {};
@@ -110,3 +100,20 @@ client.login(process.env.DISCORD_BOT_TOKEN);
 //randomly spawn a monster
 setInterval(spawn, 1000 * 60 * MonsterGameConfig.get('cooldown') * (1.25 - Math.random()*0.5), pickRandom(), MonsterGameConfig.get("channel"));
 
+
+//autocomplete for dex 
+MonsterGameClient.on('interactionCreate', interaction => {
+	if (!interaction.isAutocomplete()) return;
+	console.log('autocomplete run:',interaction.commandName)
+
+	const selectedOption = interaction.options.getFocused(true);
+
+	console.log('xcvxcv', selectedOption, selectedOption.value)
+	
+	if (selectedOption.name !== 'monster') return;
+
+	let choices = monstersAutocomplete.filter(choice => choice.name.startsWith(selectedOption.value));
+
+	//success - return choices
+	interaction.respond(choices);
+});

@@ -1,5 +1,6 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
+import { MonsterStore } from '../monsters.js';
 
 export const config = {
 	type: ApplicationCommandType.ChatInput,
@@ -62,7 +63,7 @@ export const execute = async function (interaction) {
 		let description = interaction.options.getString('description');
 
 		if (id > 9999) throw 'ID numbers must be between 1 and 9999';
-		if (MonsterGameConfig.get('monsters.'+id)) throw 'A monster with ID '+id+' already exists. Choose a different ID, or modify that monster.';
+		if (MonsterStore.get(id)) throw 'A monster with ID '+id+' already exists. Choose a different ID, or modify that monster.';
 
 		//add new emoji of monster
 		let guild = await MonsterGameClient.guilds.fetch(MonsterGameConfig.get('emojiServerId'))
@@ -79,7 +80,7 @@ export const execute = async function (interaction) {
 		if (type) newMonster.type = type;
 		if (description) newMonster.description = description;
 
-		MonsterGameConfig.set('monsters.'+id, newMonster);
+		MonsterStore.set(id, newMonster);
 
 		//success
 		await interaction.reply({content: 'Monster successfully added.', ephemeral: true });

@@ -1,4 +1,5 @@
-import { MonsterGameConfig, runawayTimer, MonsterGameClient } from "../bot.js";
+import { MonsterGameConfig, MonsterGameClient } from "../bot.js";
+import { runawayTimer } from '../monsters.js';
 
 export default function removeMonsterMessage(caught) {
     if (!MonsterGameConfig.get('activeMonster')) return;
