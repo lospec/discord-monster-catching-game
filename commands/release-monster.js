@@ -48,5 +48,5 @@ export const execute = async function(interaction) {
 	// else MonsterGameConfig.set(monsterReleasedPath, MonsterGameConfig.get(monsterReleasedPath) + 1);
 	// return;
 
-    await spawn(monsterId, interaction.channelId, true);
+    spawn(monsterId, interaction.channelId, true);
 }

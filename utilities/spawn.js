@@ -1,6 +1,5 @@
-import { MonsterGameConfig, MonsterGameClient, runawayTimer } from '../bot.js';
+import { MonsterGameConfig, MonsterGameClient, setRunaway } from '../bot.js';
 import removeMonsterMessage from '../utilities/remove-message.js';
-import runAway from './runaway.js';
 import randomElement from './random-element.js';
 import pickRandom from './pick-random.js';
 
@@ -48,7 +47,7 @@ export default function spawn(spawnId, channelId, chipped = false) {
             }
 
             //schedule runaway
-            runawayTimer = setTimeout(runAway, length);
+            setRunaway(length);
 
 		}).catch(e=>console.warn);
 }
