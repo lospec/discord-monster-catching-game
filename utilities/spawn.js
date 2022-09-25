@@ -6,7 +6,7 @@ import randomElement from './random-element.js';
 import pickRandom from './pick-random.js';
 
 //spawn a monster (maybe)
-export default function spawn(spawnId, channelId) {
+export default function spawn(spawnId, channelId, chipped=false) {
     let monsters = MonsterStore.get();
     let monster = spawnId ? monsters[spawnId] : monsters[pickRandom()];
     console.log('spawning', monster.name, 'in', channelId);
