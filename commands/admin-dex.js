@@ -1,6 +1,7 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
-import { MONSTERS } from '../monsters.js';
+import { MonsterStore } from '../monsters.js';
+import smallNumber from '../utilities/small-number.js';
 import getRarity from "../utilities/calculate-rarity.js";
 
 export const config = {
@@ -11,7 +12,7 @@ export const config = {
 	options: [{
 		name: 'monster',
 		type: ApplicationCommandOptionType.String,
-		description: 'the name or id of the monster you want to look up',
+		description: 'the name or id of the monster you want to look up (leave blank to list all)',
 		autocomplete: true
 	}]
 };
@@ -21,8 +22,8 @@ export const execute = async function (interaction) {
 		let monsterId = interaction.options.getString('monster');
 		console.log('nmodns',monsterId)
 		
-		let monster = MONSTERS[monsterId];
-		if (!monster) throw 'Monster with id ' +monsterId+' not found.';
+		let monster = MonsterStore.get(monsterId||'');
+		if (!monster) return listAllMonsters(interaction);
 
 		let topResearcher = await getTopResearcher(monsterId);
 
@@ -42,6 +43,27 @@ export const execute = async function (interaction) {
 		console.log('Failed to get monster:',err);
 		return interaction.reply({content: 'Failed to get monster: \n ```'+err+'```', ephemeral: true });
 	}
+}
+
+function listAllMonsters (interaction) {
+	let monsters = MonsterStore.get();
+  	let dexText = '';
+  	let dexDisplayCount = 0;
+	//loop through all monsters
+	for ( const [monsterId, monster] of Object.entries(monsters)) {
+
+       dexDisplayCount++;
+       dexText += monsters[monsterId].emoji + smallNumber(monsterId || 0, 3) + ' ';
+       
+      if (dexDisplayCount > 15) {
+			interaction.reply({content: dexText, ephemeral: true });
+          	dexText = '';
+          	dexDisplayCount = 0;
+      }
+	}
+  
+  	//if there's a half finished line, send that now
+  	if (dexText.length > 0) interaction.reply({content: dexText, ephemeral: true });
 }
 
 async function getTopResearcher (monsterId) {
