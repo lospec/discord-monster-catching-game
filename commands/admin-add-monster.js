@@ -1,5 +1,5 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterGameConfig } from '../bot.js';
+import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
 
 export const config = {
 	type: ApplicationCommandType.ChatInput,
@@ -73,7 +73,7 @@ export const execute = async function (interaction) {
 		let newMonster = {
 			name: name,
 			artist: artist,
-			emoji: '<'+newEmojiName+':'+newEmoji.id+'>'
+			emoji: '<:'+newEmojiName+':'+newEmoji.id+'>'
 		}
 		if (habitat) newMonster.habitat = habitat;
 		if (type) newMonster.type = type;
