@@ -32,9 +32,8 @@ glob.sync('./commands/*.js').forEach(command =>
 	import(command).then(obj => {
 		COMMANDS[obj.config.name] = obj;
 	})
-	
 );
-
+export {COMMANDS as COMMANDS}
 
 //load reactions
 let REACTIONS = {};
