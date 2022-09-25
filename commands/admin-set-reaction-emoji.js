@@ -1,5 +1,6 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 import { MonsterGameConfig, REACTIONS } from '../bot.js';
+import { MonsterStore } from '../monsters.js';
 import glob from 'glob';
 
 const REACTION_NAMES = glob.sync('./reactions/*.js').map(r => r.replace('./reactions/','').replace('.js','')).map(h => ({name:h,value:h}));

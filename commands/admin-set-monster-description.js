@@ -1,5 +1,6 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 import { MonsterGameConfig } from '../bot.js';
+import { MonsterStore } from '../monsters.js';
 
 export const config = {
 	type: ApplicationCommandType.ChatInput,
@@ -25,9 +26,9 @@ export const execute = async function (interaction) {
 	try {
 		let id = interaction.options.getInteger('id');
 		let description = interaction.options.getString('description');
-		if (! MonsterGameConfig.get('monsters.'+id)) throw 'A monster with ID '+id+' does not exist.';
+		if (! MonsterStore.get(id.toString())) throw 'A monster with ID '+id+' does not exist.';
 		
-		MonsterGameConfig.set('monsters.'+id+'.description', description);
+		MonsterStore.set(id+'.description', description);
 		await interaction.reply({content: 'Set description of monster '+id+' to '+description, ephemeral: true });
 	} catch (err) {
 		console.log('Failed to set description:',err);

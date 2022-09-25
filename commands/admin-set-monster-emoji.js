@@ -1,5 +1,6 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
+import { MonsterStore } from '../monsters.js';
 
 export const config = {
 	type: ApplicationCommandType.ChatInput,
@@ -26,7 +27,7 @@ export const execute = async function (interaction) {
 		let id = interaction.options.getInteger('id');
 		let sprite = interaction.options.getAttachment('sprite');
 
-		let monster = MonsterGameConfig.get('monsters.'+id)
+		let monster = MonsterStore.get(id.toString())
 			if (!monster) throw 'A monster with ID '+id+' does not exist.';
 
 		let guild = await MonsterGameClient.guilds.fetch(MonsterGameConfig.get('emojiServerId'));
@@ -34,7 +35,7 @@ export const execute = async function (interaction) {
 		let newEmoji = await guild.emojis.create({ attachment: sprite.url, name:  newEmojiName});
 		let emojiText = '<:'+newEmojiName+':'+newEmoji.id+'>';
 
-		MonsterGameConfig.set('monsters.'+id+'.emoji',emojiText);
+		MonsterStore.set(id+'.emoji',emojiText);
 		await interaction.reply({content: 'Set new emoji for monster '+id+': '+emojiText, ephemeral: true });
 	} catch (err) {
 		console.log('Failed to set monster emoji:',err);
