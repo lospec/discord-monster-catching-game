@@ -637,7 +637,7 @@ new Module('monster-catcher release', 'message', {filter: new RegExp('^'+CMD+' r
 
 	let args = message.content.split(' ');
 	//let monsterId = String(args[2]).replace(/0/g,'');
-  let monsterId = String(args[2]);
+  	let monsterId = String(args[2]);
 
 	//make sure monster exists and player has it
 	if (!monsterCatcherData.has('monsters.'+monsterId)) return send(message, '` LOZPEKAMON NOT FOUND `');
@@ -656,14 +656,14 @@ new Module('monster-catcher release', 'message', {filter: new RegExp('^'+CMD+' r
 	//send monster message
 	send(message,'` '+user.username+' chipped and released a '+monster.name+'. `');
 
-		console.log('SPAWNING MONSTER ',monster.name);
+	console.log('SPAWNING MONSTER ',monster.name);
 
 	// TEMP PATCH TO PREVENT THEM FROM BEING RELEASED TO OTHER PLAYERS SINCE ITS BROKEN
 			//increase the released monsters count
-			let monsterReleasedPath = 'monsters.'+monsterId+'.released';
-			if (!monsterCatcherData.has(monsterReleasedPath)) monsterCatcherData.set(monsterReleasedPath, 1);
-			else monsterCatcherData.set(monsterReleasedPath, monsterCatcherData.get(monsterReleasedPath) + 1);
-			return;
+	let monsterReleasedPath = 'monsters.'+monsterId+'.released';
+	if (!monsterCatcherData.has(monsterReleasedPath)) monsterCatcherData.set(monsterReleasedPath, 1);
+	else monsterCatcherData.set(monsterReleasedPath, monsterCatcherData.get(monsterReleasedPath) + 1);
+	return;
 
 
 	//send the monster

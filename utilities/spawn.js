@@ -27,20 +27,29 @@ export default function spawn(spawnId, channelId) {
                 MonsterGameConfig.set('activeMonsterName',monster.name);
                 MonsterGameConfig.set('activeMonsterId', spawnId);
                 MonsterGameConfig.set('activeMonsterChannel',monsterSendChannel);
-                MonsterGameConfig.set('activeChipped',false);
-
+                MonsterGameConfig.set('activeChipped', chipped);
+                
                 //send monster message
-                channel.send('` A wild '+monster.name+' appeared! `');
+                if (!chipped) {
+                    channel.send('` A wild '+monster.name+' appeared! `');
+                }
             });
 
 
             //calculate time until monster runs away
-            let length = 1000 * 60 						//1 minute
+            let length; 
+            if (chipped) {
+                length = 1000 * 15 - 1000 * 10 * Math.random(); // 5-15 seconds
+            }
+            else {
+                length = 1000 * 60 						//1 minute
                 * MonsterGameConfig.get('cooldown')	    //cooldown setting in minutes
                 * Math.random()							//random (making the value above the max, and 0 the least)
                 + 1000*10;								//minimum of 10 seconds
+            }
+
             //schedule runaway
-            runawayTimer = setTimeout(runAway, length);
+            setRunaway(length);
 
 		}).catch(e=>console.warn);
 }
