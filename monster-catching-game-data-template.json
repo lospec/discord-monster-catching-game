@@ -18,5 +18,10 @@
 	"serverGuildId": "your discord server id",
 	"emojiServerId": "the discord server the emojis should be added to (can be same as above)",
 	"habitats": ["Forest","Ocean","Sky"],
-	"types": ["Fire", "Water", "Grass"]
+	"types": ["Fire", "Water", "Grass"],
+	"bank": {
+		"isRemote": "false",
+		"hostname": "localhost",
+		"port": 6379
+	}
 }

@@ -3,6 +3,7 @@ import runAway from "../utilities/runaway.js";
 import { MonsterGameConfig } from "../bot.js";
 import spawn from '../utilities/spawn.js';
 import { MonsterStore } from '../monsters.js';
+import { PlayerStore } from '../players.js';
 
 export const config = {
 	type: ApplicationCommandType.ChatInput,
@@ -33,9 +34,9 @@ export const execute = async function(interaction) {
 	let monster = MonsterStore.get(monsterId.toString());
 
 	//decrement players's monster count
-	let monsterPath = 'players.'+interaction.user.id+'.'+monsterId;
-	MonsterGameConfig.set(monsterPath, MonsterGameConfig.get(monsterPath) -1);
-	if (MonsterGameConfig.get(monsterPath) == 0) MonsterGameConfig.del(monsterPath);
+	let monsterPath = interaction.user.id+'.'+monsterId;
+	PlayerStore.set(monsterPath, MonsterGameConfig.get(monsterPath) -1);
+	if (PlayerStore.get(monsterPath) == 0) PlayerStore.del(monsterPath);
 
 	//send monster message
 	interaction.reply('` '+interaction.user.username+' chipped and released a '+monster.name+'. `');

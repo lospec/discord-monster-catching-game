@@ -3,6 +3,7 @@ import { rarestRarity } from "../monsters.js";
 import randomElement from "../utilities/random-element.js";
 import getRarity from "../utilities/calculate-rarity.js";
 import removeMonsterMessage from "../utilities/remove-message.js";
+import { PlayerStore } from "../players.js";
 
 const INTROTEXT = `\`\`\`
 Hello there! Welcome to the world of Lozpekamon!
@@ -207,13 +208,13 @@ export const execute = function (reaction, user) {
                     reaction.message.channel.send(ballEmoji+' ` ' + uName + ' caught the wild '+mName+'! `');
 
                 //a path where the new data should be saved
-                let monsterPath = 'players.'+user.id+'.'+MonsterGameConfig.get('activeMonsterId');
+                let monsterPath = user.id+'.'+MonsterGameConfig.get('activeMonsterId');
 
                 //create monster if not existant
-                if (!MonsterGameConfig.has(monsterPath))
-                MonsterGameConfig.set(monsterPath, 1);
+                if (!PlayerStore.has(monsterPath))
+                PlayerStore.set(monsterPath, 1);
                 //increment
-                else MonsterGameConfig.set(monsterPath, MonsterGameConfig.get(monsterPath) + 1);
+                else PlayerStore.set(monsterPath, PlayerStore.get(monsterPath) + 1);
             }
         }).catch(d => console.log('failed to get guild member',d));
     }
