@@ -18,39 +18,5 @@
 	"serverGuildId": "your discord server id",
 	"emojiServerId": "the discord server the emojis should be added to (can be same as above)",
 	"habitats": ["Forest","Ocean","Sky"],
-	"types": ["Fire", "Water", "Grass"],
-	"players": {
-		"a discord players id": {
-			"1": 243,
-			"15": 353,
-			"29": 12
-		}
-	},
-	"monsters": {
-		"1": {
-			"name": "Grinning",
-			"emoji": ":grinning:",
-			"artist": "discord"
-		},
-		"15": {
-			"name": "Imp",
-			"emoji": ":smiling_imp:",
-			"artist": "discord"
-		},
-		"29": {
-			"name": "Ghost",
-			"emoji": ":ghost:",
-			"artist": "discord"
-		},
-		"69": {
-			"name": "Alien",
-			"emoji": ":alien:",
-			"artist": "discord"
-		},
-		"777": {
-			"name": "Poop",
-			"emoji": ":poop:",
-			"artist": "discord"
-		}
-	}
+	"types": ["Fire", "Water", "Grass"]
 }

@@ -2,10 +2,11 @@ import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs1
 import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
 import { MONSTERS } from '../monsters.js';
 import getRarity from "../utilities/calculate-rarity.js";
+import { PlayerStore } from '../players.js';
 
 export const config = {
 	name: 'admin-dex', 
-	description: 'look up all unlocked information about a monster',
+	description: 'look up all information about a monster',
 	type: ApplicationCommandType.ChatInput,
 	default_member_permissions: "0",
 	options: [{
@@ -45,8 +46,7 @@ export const execute = async function (interaction) {
 }
 
 async function getTopResearcher (monsterId) {
-	let players = MonsterGameConfig.get('players');
-
+	let players = PlayerStore.get();
 	//convert to array
 	let topResearcher = Object.entries(players)
 		.map(p => {

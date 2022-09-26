@@ -8,6 +8,7 @@ import { Routes as DiscordRestRoutes } from 'discord-api-types/v9';
 import { Store } from 'data-store';
 import glob from 'glob';
 import { MONSTERS, monstersAutocomplete } from './monsters.js';
+import { playersAutocomplete } from './players.js';
 
 
 dotenv.config();
@@ -108,12 +109,18 @@ MonsterGameClient.on('interactionCreate', interaction => {
 
 	const selectedOption = interaction.options.getFocused(true);
 
-	console.log('xcvxcv', selectedOption, selectedOption.value)
-	
-	if (selectedOption.name !== 'monster') return;
-
-	let choices = monstersAutocomplete.filter(choice => choice.name.startsWith(selectedOption.value));
+	let autocomplete;
+	switch (selectedOption.name) {
+		case 'monster':
+			autocomplete = monstersAutocomplete;
+			break;
+		case 'player':
+			autocomplete = playersAutocomplete;
+			break;
+		default:
+			return;
+	}
 
 	//success - return choices
-	interaction.respond(choices);
+	interaction.respond(autocomplete.filter(choice => choice.name.startsWith(selectedOption.value)));
 });
