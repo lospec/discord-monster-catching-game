@@ -1,6 +1,7 @@
 import { MonsterGameConfig } from "./bot";
 import http from "http";
 
+//TODO: Make the network requests actually work
 export default class Bank {
     constructor() {
         this.options = {
