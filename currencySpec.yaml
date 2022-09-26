@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: Discord Currency Spec
+  description: Barebones currency to hook Discord bots into
+  version: 0.0.1
+  
+servers:
+ - url: localhost
+   description: No auth
+ 
+paths:
+  /balance/{userId}:
+    get:
+      summary: Get balance for a user
+      parameters: 
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The discord id of the user to get the balance of
+      responses:
+        '200':
+          description: The balance for the requested user
+          content:
+            application/json:
+              schema:
+                type: integer
+    post:
+      summary: Increment/decrement the balance for a user
+      parameters: 
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The discord id of the user to change the balance of
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: integer
+      responses:
+        '200':
+          description: The new balance
+          content:
+            application/json:
+              schema:
+                type: integer
+    put:
+      summary: Set the balance for a user
+      parameters: 
+        - in: path
+          name: userId
+          schema:
+            type: integer
+          required: true
+          description: The discord id of the user to set the balance of
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: integer
+      responses:
+        '200':
+          description: Whether the user existed already or not
+          content:
+            application/json:
+              schema:
+                type: boolean

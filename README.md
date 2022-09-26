@@ -92,7 +92,7 @@ Main goal is to rewrite the legacy code into the newer version, running on disco
 - ~~transfer over all old reactions~~
 - ~~transfer over wild monster appeared system~~
 - ~~separate functions into different files~~
-- separate config data, monster data and user data into separate json files
+- ~~separate config data, monster data and user data into separate json files~~
 
 commands to add:
 - ~~new monster command, with image upload (popup?)~~
