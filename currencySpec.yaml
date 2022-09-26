@@ -26,6 +26,8 @@ paths:
             application/json:
               schema:
                 type: integer
+        '404':
+          description: The user does not exist
     post:
       summary: Increment/decrement the balance for a user
       parameters: 
@@ -48,6 +50,8 @@ paths:
             application/json:
               schema:
                 type: integer
+        '404':
+          description: The user does not exist
     put:
       summary: Set the balance for a user
       parameters: 
