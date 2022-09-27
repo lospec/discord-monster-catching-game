@@ -42,7 +42,11 @@ paths:
         content:
           application/json:
             schema:
-              type: integer
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  description: Added to existing balance
       responses:
         '200':
           description: The new balance
@@ -66,7 +70,11 @@ paths:
         content:
           application/json:
             schema:
-              type: integer
+              type: object
+              properties:
+                amount:
+                  type: integer
+                  description: The balance to set
       responses:
         '200':
           description: Whether the user existed already or not
