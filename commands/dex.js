@@ -1,5 +1,4 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterGameConfig } from '../bot.js';
 import { MonsterStore } from '../monsters.js';
 
 export const config = {
@@ -14,7 +13,7 @@ export const config = {
 };
 
 export const execute = async function (interaction) {
-	let id = interaction.options.getInteger('id');
+	let id = interaction.options.getInteger('monster');
 
 	let monster = MonsterStore.get(id.toString());
 	if (!monster) return interaction.reply({content: 'You haven\t found monster #'+id, ephemeral: true });
