@@ -77,7 +77,7 @@ paths:
                   description: The balance to set
       responses:
         '200':
-          description: Whether the user existed already or not
+          description: Whether a new user was created
           content:
             application/json:
               schema:
