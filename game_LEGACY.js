@@ -576,12 +576,12 @@ new Module('monster-catcher dex', 'message', {filter: new RegExp('^'+CMD+' (dex|
 new Module('monster-catcher dex', 'message', {filter: new RegExp('^'+CMD+' (dex|d) \\d+$'), channel: CHANNEL}, function (message, user) {
 
 	let args = message.content.split(' ');
-	///let monsterId = String(args[2]).replace(/^0+/g,'');
-  let monsterId = String(args[2]);
+	//let monsterId = String(args[2]).replace(/^0+/g,'');
+	let monsterId = String(args[2]);
 
 	//make sure monster exists and player has it
-	if (!monsterCatcherData.has('monsters.'+monsterId)) return send(message, '` LOZPEKAMON NOT FOUND `');
-	if (!monsterCatcherData.has('players.'+user.id+'.'+monsterId)) return send(message, '` LOZPEKAMON NOT FOUND `');
+	if (!monsterCatcherData.has('monsters.'+monsterId)) return send(message, '` LOZPEKAMON DOES NOT EXIST `');
+	if (!monsterCatcherData.has('players.'+user.id+'.'+monsterId)) return send(message, '` LOZPEKAMON NOT FOUND IN DEX `');
 
 	let monster = monsterCatcherData.get('monsters.'+monsterId);
 

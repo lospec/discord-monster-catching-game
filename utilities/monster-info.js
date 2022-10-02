@@ -4,22 +4,37 @@ import smallNumber from '../utilities/small-number.js';
 import getRarity from "../utilities/calculate-rarity.js";
 import { PlayerStore } from '../players.js';
 
-export const getMonsterDescription = async function (monsterId) {
+export async function getMonsterDescription (monsterId, admin=false) {
 	try {
 		let monster = MonsterStore.get(monsterId||'');
-
 		let topResearcher = await getTopResearcher(monsterId);
+		let R = getRarity(monsterId);
+		
+		//habitat (if released is more than 1)
+		let habitat = monster.habitat && (monster.released > 1 || admin) ? monster.habitat.toUpperCase() : 'UNKNOWN';
+		
+		//type (if released is 2 times their rarity)
+		let type = monster.type && (monster.released >= R*2 || admin) ? monster.type.toUpperCase() : 'UNKNOWN';
+	
+		//description (if released is 3 times their rarity)
+		let description = monster.description && (monster.released >= R*3 || admin) ? monster.description+' ('+(monster.released||0)+' released).' : 'More research is needed ('+(monster.released||0)+' released).';
+
+		//rarity (if released is 4 times their rarity)
+		let rarity = monster.rarity && (monster.released >= R*4 || admin) ? R : 'UNKNOWN';
+
+		let artist = monster.artist ? monster.artist.toUpperCase() : 'UNKNOWN';
 
 		let dexText = '';
-		dexText += '**#'+ monster.name +': '+monsterId+'**\n';
-		dexText += monster.emoji+'\n';
-		dexText += '` '+ (monster.description||'description not specified') +'`\n';
-		dexText += '` Habitat: '+ (monster.habitat||'not specified') +'`\n';
-		dexText += '` Type: '+ (monster.type||'not specified') +'`\n';
-		dexText += '` Rarity: '+ getRarity(monsterId) +'`\n';
-		dexText += '` Designer: '+ (monster.artist||'artist not specified') +'`\n';
+		dexText += '**#' + monster.name +': '+monsterId+'**\n';
+
+		dexText += 					monster.emoji	+'\n';
+		dexText += '` '				+ description 	+'`\n';
+		dexText += '` Habitat: '	+ habitat 		+'`\n';
+		dexText += '` Type: '		+ type 			+'`\n';
+		dexText += '` Rarity: '		+ rarity 		+'`\n';
+		dexText += '` Designer: '	+ artist 		+'`\n';
 		if (topResearcher)
-			dexText += '` Top Researcher: '+ topResearcher.username.toUpperCase()+'#'+topResearcher.discriminator +'`\n';
+			 dexText += '` Top Researcher: '+topResearcher.username.toUpperCase()+' ('+PlayerStore.get(topResearcher.id)[monsterId] +' owned)`';
 		return dexText;
 	} catch (err) {
 		console.log('Failed to get monster:',err);
@@ -54,7 +69,7 @@ async function getTopResearcher (monsterId) {
 	let topResearcher = Object.entries(players)
 		.map(p => {
 			if (!p[1][monsterId]) return;
-			console.log(p[0],p[1][monsterId])
+			//console.log(p[0],p[1][monsterId])
 			return {
 				id: p[0],
 				total: p[1][monsterId],

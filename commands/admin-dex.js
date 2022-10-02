@@ -23,9 +23,7 @@ export const execute = async function (interaction) {
 	let monsterId = interaction.options.getString('monster');
 	let monster = MonsterStore.get(monsterId||'');
 	if (!monster) return listAllMonsters(interaction);
-	let dexText = await getMonsterDescription(monsterId);
-	console.log(typeof dexText);
-	console.log(dexText);
+	let dexText = await getMonsterDescription(monsterId, true);
 	await interaction.reply({content: dexText, ephemeral: true });
 	
 }
