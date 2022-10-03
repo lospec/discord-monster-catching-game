@@ -745,7 +745,7 @@ new Module('monster-catcher researchers', 'message', {filter: new RegExp('^'+CMD
 
 //give a monster
 new Module('monster-catcher give', 'message', {filter: new RegExp('^'+CMD+' +give +<@!?\\d+> +\\d+','i'), channel: CHANNEL}, function (message,user) {
-		console.log('GIVE',message.content);
+	console.log('GIVE',message.content);
 
 	let args = message.content.split(/ +/g);
 
