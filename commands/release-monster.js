@@ -10,33 +10,41 @@ export const config = {
 	name: 'release-monster',
 	description: 'release a lozpekamon',
 	options: [{
-		name: 'monster-id',
-		type: ApplicationCommandOptionType.Integer,
+		name: 'monster',
+		type: ApplicationCommandOptionType.String,
 		description: 'The ID number of the lozpekamon to release',
-		required: true 
+		required: true ,
+		autocomplete: true
 	}]
 }
 
 export const execute = async function(interaction) {
-  	let monsterId = interaction.options.getInteger('monster-id');
+  	let monsterId = interaction.options.getString('monster');
 
 	//make sure monster exists and player has it
-	if (!MonsterStore.has(monsterId.toString())) {
+	if (!MonsterStore.has(monsterId)) {
         return await interaction.reply({content: '` LOZPEKAMON NOT FOUND `', ephemeral: true });
-    } 
-	if (!MonsterGameConfig.has('players.'+interaction.user.id+'.'+monsterId)) {
+    }
+	console.log("Monster exists");
+	if (!PlayerStore.has(interaction.user.id+'.'+monsterId+'.owned')) {
         return await interaction.reply({content: '` LOZPEKAMON NOT FOUND `', ephemeral: true });
     } 
 
 	//if theres already an active monster, make it run away
 	runAway();
 
-	let monster = MonsterStore.get(monsterId.toString());
+	let monster = MonsterStore.get(monsterId);
 
 	//decrement players's monster count
-	let monsterPath = interaction.user.id+'.'+monsterId;
+	let monsterPath = interaction.user.id+'.'+monsterId+'.owned';
 	PlayerStore.set(monsterPath, MonsterGameConfig.get(monsterPath) -1);
 	if (PlayerStore.get(monsterPath) == 0) PlayerStore.del(monsterPath);
+
+	//increment monster's release count
+	let releasePath = interaction.user.id+'.'+monsterId+'.released';
+	if (!PlayerStore.has(releasePath)) PlayerStore.set(releasePath, 0);
+	PlayerStore.set(releasePath, MonsterGameConfig.get(releasePath) +1);
+
 
 	//send monster message
 	interaction.reply('` '+interaction.user.username+' chipped and released a '+monster.name+'. `');

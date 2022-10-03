@@ -11,7 +11,7 @@ console.log(players)
 Object.keys(players).forEach(playerId => {
 	console.log(playerId)
 	PLAYERS[playerId] = players[playerId];
-	PLAYERS[playerId].id = playerId;
+	// PLAYERS[playerId].id = playerId;
 	
 	playersAutocomplete.push({name: playerId, value: playerId});
 	playersAutocomplete.push({name: PLAYERS[playerId].name, value: playerId});

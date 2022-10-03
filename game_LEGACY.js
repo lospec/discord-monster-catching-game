@@ -534,39 +534,29 @@ new Module('monster-catcher', 'message', {filter: new RegExp('^'+CMD+'( help| h)
 new Module('monster-catcher dex', 'message', {filter: new RegExp('^'+CMD+' (dex|d)$'), channel: CHANNEL}, function (message, user) {
 
 	if (!monsterCatcherData.has('players.'+user.id) || Object.keys(monsterCatcherData.get('players.'+user.id)).length == 0) return send(message, '` '+user.username.toUpperCase() +'\'s DEX IS EMPTY! `')
-
-	
-
-
 	let playerData = monsterCatcherData.get('players.'+user.id);
 	let statText = '( ' + Object.keys(playerData).length + ' UNIQUE | ' + Object.values(playerData).reduce((a,b) => a + b) + ' TOTAL )'
 
 	let monsters = monsterCatcherData.get('monsters');
 
-  let dexText = '';
-  let dexDisplayCount = 0;
+	let dexText = '';
+	let dexDisplayCount = 0;
 
-  //send total
-  send(message, '` '+user.username.toUpperCase() +'\'s DEX: '+statText+'`');
+	//send total
+	send(message, '` '+user.username.toUpperCase() +'\'s DEX: '+statText+'`');
 
-//loop through all sending each
+	//loop through all sending each
 	for ( const [monsterId, monster] of Object.entries(monsters)) {
 		if (monsterCatcherData.has('players.'+user.id+'.'+monsterId)) {
-       dexDisplayCount++;
-       dexText += monsters[monsterId].emoji + small(monsterCatcherData.get('players.'+user.id+'.'+monsterId)) + ' ';
-       
-       
-      if (dexDisplayCount > 15) {
-          send(message, dexText);
-          dexText = '';
-          dexDisplayCount = 0;
-      }
-   
-			
-      
+			dexDisplayCount++;
+			dexText += monsters[monsterId].emoji + small(monsterCatcherData.get('players.'+user.id+'.'+monsterId)) + ' ';
+			if (dexDisplayCount > 15) {
+				send(message, dexText);
+				dexText = '';
+				dexDisplayCount = 0;
+			}  
 		}
 	}
-  
   //if there's a half finished line, send that now
   if (dexText.length > 0) send(message, dexText);
 	

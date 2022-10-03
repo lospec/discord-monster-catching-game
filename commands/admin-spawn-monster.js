@@ -15,16 +15,17 @@ export const config = {
 		required: false 
 	},
 	{
-		name: 'id',
-		type: ApplicationCommandOptionType.Integer,
+		name: 'monster',
+		type: ApplicationCommandOptionType.String,
 		description: 'The ID number of the lozpekamon to spawn',
-		required: false 
+		required: false,
+		autocomplete: true
 	}
 	]
 }
 
 export const execute = async function(interaction) {
-    let spawnId = interaction.options.getInteger('id') ?? pickRandom();
+    let spawnId = interaction.options.getString('monster') ?? pickRandom();
 	let channelId = interaction.options.getString('channel') ?? MonsterGameConfig.get('channel');
     //pick a random monster
     spawn(spawnId, channelId);

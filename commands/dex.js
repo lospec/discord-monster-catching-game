@@ -1,6 +1,6 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 import { MonsterStore } from '../monsters.js';
-import { getMonsterDescription } from '../utilities/monster-info.js';
+import { getMonsterDescription, personalDex } from '../utilities/monster-info.js';
 
 export const config = {
 	name: 'dex', 
@@ -17,9 +17,13 @@ export const config = {
 export const execute = async function (interaction) {
 	let id = interaction.options.getString('monster');
 
-	let monster = MonsterStore.get(id||'');
+	if (!id) {
+		return personalDex(interaction);	
+	}
+	
+	let monster = MonsterStore.get(id);
 	if (!monster) return interaction.reply({content: 'You haven\t found monster #'+id, ephemeral: true });
 
-	let dexText = await getMonsterDescription(id, true);
+	let dexText = await getMonsterDescription(id, interaction.user);
 	await interaction.reply({content: dexText, ephemeral: true });
-}	
+}

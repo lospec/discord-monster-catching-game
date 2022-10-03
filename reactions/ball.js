@@ -208,7 +208,7 @@ export const execute = function (reaction, user) {
                     reaction.message.channel.send(ballEmoji+' ` ' + uName + ' caught the wild '+mName+'! `');
 
                 //a path where the new data should be saved
-                let monsterPath = user.id+'.'+MonsterGameConfig.get('activeMonsterId');
+                let monsterPath = user.id+'.'+MonsterGameConfig.get('activeMonsterId')+'.owned';
 
                 //create monster if not existant
                 if (!PlayerStore.has(monsterPath))

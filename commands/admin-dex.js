@@ -1,9 +1,5 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
 import { MonsterStore } from '../monsters.js';
-import smallNumber from '../utilities/small-number.js';
-import getRarity from "../utilities/calculate-rarity.js";
-import { PlayerStore } from '../players.js';
 import { getMonsterDescription, listAllMonsters } from '../utilities/monster-info.js';
 
 export const config = {
@@ -23,7 +19,7 @@ export const execute = async function (interaction) {
 	let monsterId = interaction.options.getString('monster');
 	let monster = MonsterStore.get(monsterId||'');
 	if (!monster) return listAllMonsters(interaction);
-	let dexText = await getMonsterDescription(monsterId, true);
+	let dexText = await getMonsterDescription(monsterId);
 	await interaction.reply({content: dexText, ephemeral: true });
 	
 }
