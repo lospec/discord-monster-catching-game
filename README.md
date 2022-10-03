@@ -88,7 +88,7 @@ Main goal is to rewrite the legacy code into the newer version, running on disco
 - ~~create new discord.js v14 bot~~
 - ~~implement real discord commands~~
 - ~~implement reaction system~~
-- transfer over all old commands
+- ~~transfer over all old commands~~
 - ~~transfer over all old reactions~~
 - ~~transfer over wild monster appeared system~~
 - ~~separate functions into different files~~
@@ -102,6 +102,6 @@ future goals:
 - individual monster owning system
 - monster level up system
 - monster battle system
-- additional data storage options (database)
+- ~~additional data storage options (database)~~
 - high scores list(s) with top trainers/monsters
-- economy plugin
+- ~~economy plugin~~
