@@ -1,28 +1,35 @@
 {
-    "1": {
-      "name": "Grinning",
-      "emoji": ":grinning:",
-      "artist": "discord",
-      "released": 6
-    },
-    "15": {
-      "name": "Imp",
-      "emoji": ":smiling_imp:",
-      "artist": "discord"
-    },
-    "29": {
-      "name": "Ghost",
-      "emoji": ":ghost:",
-      "artist": "discord"
-    },
-    "69": {
-      "name": "Alien",
-      "emoji": ":alien:",
-      "artist": "discord"
-    },
-    "777": {
-      "name": "Poop",
-      "emoji": ":poop:",
-      "artist": "discord"
-    }
+  "1": {
+    "name": "Grinning",
+    "emoji": ":grinning:",
+    "artist": "discord",
+    "id": "1",
+    "description": "A yellow face with simple, open eyes and a broad, open smile, showing upper teeth on most platforms. Often conveys general happiness and good-natured amusement.",
+    "type": "emoji",
+    "habitat": "gamerland"
+  },
+  "15": {
+    "name": "Imp",
+    "emoji": ":smiling_imp:",
+    "artist": "discord",
+    "id": "15"
+  },
+  "29": {
+    "name": "Ghost",
+    "emoji": ":ghost:",
+    "artist": "discord",
+    "id": "29"
+  },
+  "69": {
+    "name": "Alien",
+    "emoji": ":alien:",
+    "artist": "discord",
+    "id": "69"
+  },
+  "777": {
+    "name": "Poop",
+    "emoji": ":poop:",
+    "artist": "discord",
+    "id": "777"
+  }
   }

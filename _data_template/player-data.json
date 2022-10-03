@@ -1,7 +1,12 @@
 {
-    "a discord players id": {
-        "1": 243,
-        "15": 353,
-        "29": 12
+    "a discord player's id": {
+        "1": {
+          "owned": 22,
+          "released": 15
+        },
+        "29": {
+          "owned": 10,
+          "released": 10
+        }
     }
 }
