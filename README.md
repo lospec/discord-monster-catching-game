@@ -24,7 +24,7 @@ Much of the game can be configured through commands, use `/lozpekamon-admin-help
 
 #### Response Texts
 
-Various .txt files in the `_text` folder contain the text used for game responses. 
+Various .txt files in the `_text` folder contain the text used for game responses. Most files have 1 option per line, and a random one is chosen.
 
 Files starting with `response-` are directly used to generate message for the user, and certain keywords are replaced before sending:
 
@@ -32,7 +32,7 @@ Files starting with `response-` are directly used to generate message for the us
 - **%M** - active monster name
 - **%B** - name of ball
 - **%G** - name of random gang
-- **%R** - synonym for "ran away" (defined in monster-catcher-data for now)
+- **%R** - synonym for "ran away" (defined in `ran-away-phrases.txt`)
 
 
 ### Development
