@@ -122,5 +122,5 @@ MonsterGameClient.on('interactionCreate', interaction => {
 	}
 
 	//success - return choices
-	interaction.respond(autocomplete.filter(choice => choice.name.toLowerCase().contains(selectedOption.value.toLowerCase())));
+	interaction.respond(autocomplete.filter(choice => choice.name.toLowerCase().includes(selectedOption.value.toLowerCase())));
 });
