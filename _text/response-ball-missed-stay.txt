@@ -1,0 +1,7 @@
+%U missed by so much the %M didn't notice.
+%U missed! %M growled!
+%U missed! %M stared menacingly!
+%U threw a %B, but the %M hit it out of the air!
+%U hit the %M, but the %B seemed defective...
+%U captured %M, but it broke free!
+%U threw a %B, but a %G grunt knocked it out of the way!

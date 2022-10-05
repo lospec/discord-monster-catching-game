@@ -1,0 +1,5 @@
+%M dodged %U's %B and %R
+%M evaded %U's %B and %R
+%M ducked under %U's %B and %R
+%U thew a %B but missed, and the %M %R
+%U's %B missed the %M and it %R

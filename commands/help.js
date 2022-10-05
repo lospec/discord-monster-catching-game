@@ -7,7 +7,7 @@ export const config = {
 	type: ApplicationCommandType.ChatInput
 };
 
-const INTROTEXT = '```' + fs.readFileSync('_data/help.txt', 'utf8') + '```';
+const INTROTEXT = '```' + fs.readFileSync('_text/help.txt', 'utf8') + '```';
 
 export const execute = async function (interaction) {
 	await interaction.reply({content: INTROTEXT, ephemeral: true });

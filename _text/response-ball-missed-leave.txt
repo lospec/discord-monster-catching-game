@@ -1,0 +1,12 @@
+%U missed! The %M %R!
+%U missed! The %M %R!
+%U missed! The %M %R!
+%U missed! The %M %R!
+%U missed! The startled %M %R!
+%U missed! The frightened %M %R!
+%U missed! The spooked %M %R!
+%U just missed, scaring off the %M!
+%U hit the %M too hard and it died.
+%U missed! The %M stared for a moment, then %R.
+%U caught the %M, but a %G grunt jumped out and stomped the %B to pieces!
+%U caught the %M, but a %G grunt jumped out and stole the %B!

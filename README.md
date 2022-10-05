@@ -16,6 +16,25 @@ a discord-based monster catching game engine, used for Lozpekamon on our Discord
 - create the environment variable `DISCORD_BOT_TOKEN` and set it to your bots token (easiest way to to add it to the .env file)
 - run `npm start`
 
+### Config
+
+How to configure the game to create your own monster catching game.
+
+Much of the game can be configured through commands, use `/lozpekamon-admin-help` to see a full list.
+
+#### Response Texts
+
+Various .txt files in the `_text` folder contain the text used for game responses. 
+
+Files starting with `response-` are directly used to generate message for the user, and certain keywords are replaced before sending:
+
+- **%U** - user name
+- **%M** - active monster name
+- **%B** - name of ball
+- **%G** - name of random gang
+- **%R** - synonym for "ran away" (defined in monster-catcher-data for now)
+
+
 ### Development
 
 #### Commands
@@ -102,6 +121,6 @@ future goals:
 - individual monster owning system
 - monster level up system
 - monster battle system
-- ~~additional data storage options (database)~~
+- additional data storage options (database)
 - high scores list(s) with top trainers/monsters
 - ~~economy plugin~~
