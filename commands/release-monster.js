@@ -37,13 +37,13 @@ export const execute = async function(interaction) {
 
 	//decrement players's monster count
 	let monsterPath = interaction.user.id+'.'+monsterId+'.owned';
-	PlayerStore.set(monsterPath, MonsterGameConfig.get(monsterPath) -1);
+	PlayerStore.set(monsterPath, PlayerStore.get(monsterPath) -1);
 	if (PlayerStore.get(monsterPath) == 0) PlayerStore.del(monsterPath);
 
 	//increment monster's release count
 	let releasePath = interaction.user.id+'.'+monsterId+'.released';
 	if (!PlayerStore.has(releasePath)) PlayerStore.set(releasePath, 0);
-	PlayerStore.set(releasePath, MonsterGameConfig.get(releasePath) +1);
+	PlayerStore.set(releasePath, PlayerStore.get(releasePath) +1);
 
 
 	//send monster message
