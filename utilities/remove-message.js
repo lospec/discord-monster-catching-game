@@ -9,6 +9,7 @@ export default function removeMonsterMessage(caught) {
 
 	//reset active monster
 	MonsterGameConfig.set('activeMonster',false);
+	MonsterGameConfig.set('activeChippedUserId',false);
 	clearTimeout(runawayTimer);
 
 	console.log('deleting message',channelid,messageid)

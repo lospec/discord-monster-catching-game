@@ -75,6 +75,7 @@ export const execute = function (reaction, user) {
         let activeMonster = MonsterGameConfig.get('activeMonster');
         if (reaction.message.id !== activeMonster) return 'CONTINUE';
         let mName =  MonsterGameConfig.get('activeMonsterName').toUpperCase();
+        let mChip =  MonsterGameConfig.get('activeChippedUserId');
         let mId =  MonsterGameConfig.get('activeMonsterId');
         let uName = user.username.toUpperCase();
 
@@ -201,10 +202,17 @@ export const execute = function (reaction, user) {
 
                 let ballEmoji = ball=='NITROBALL'? NBall : Ball;
 
+				console.log('is it fucking chipped?!',mChip)
+
                 //check if monster was chipped
-                if (MonsterGameConfig.get('activeChipped') == true)  //if it was a chipped monster
+                if (mChip.length == 18) { //if it was a chipped monster
                     reaction.message.channel.send(ballEmoji+' ` ' + uName + ' recaught the released '+mName+'! `');
-                else //normal catch
+					
+					//undo the players recorded release
+					let releasePath = mChip+'.'+mId+'.released';
+					if (!PlayerStore.has(releasePath)) PlayerStore.set(releasePath, 0);
+					PlayerStore.set(releasePath, PlayerStore.get(releasePath) -1 );
+				} else //normal catch
                     reaction.message.channel.send(ballEmoji+' ` ' + uName + ' caught the wild '+mName+'! `');
 
                 //a path where the new data should be saved

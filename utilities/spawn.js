@@ -5,7 +5,7 @@ import randomElement from './random-element.js';
 import pickRandom from './pick-random.js';
 
 //spawn a monster (maybe)
-export default function spawn(spawnId, channelId, chipped=false) {
+export default function spawn(spawnId, channelId, chippedUserId=false) {
     let monsters = MonsterStore.get();
     let monster = spawnId ? monsters[spawnId] : monsters[pickRandom()];
     console.log('spawning', monster.name, 'in', channelId);
@@ -26,10 +26,10 @@ export default function spawn(spawnId, channelId, chipped=false) {
                 MonsterGameConfig.set('activeMonsterName',monster.name);
                 MonsterGameConfig.set('activeMonsterId', spawnId);
                 MonsterGameConfig.set('activeMonsterChannel',monsterSendChannel);
-                MonsterGameConfig.set('activeChipped', chipped);
+                MonsterGameConfig.set('activeChippedUserId', chippedUserId);
                 
                 //send monster message
-                if (!chipped) {
+                if (!chippedUserId) {
                     channel.send('` A wild '+monster.name+' appeared! `');
                 }
             });
@@ -37,7 +37,7 @@ export default function spawn(spawnId, channelId, chipped=false) {
 
             //calculate time until monster runs away
             let length; 
-            if (chipped) {
+            if (chippedUserId) {
                 length = 1000 * 15 - 1000 * 10 * Math.random(); // 5-15 seconds
             }
             else {

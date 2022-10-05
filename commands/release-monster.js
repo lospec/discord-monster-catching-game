@@ -45,7 +45,6 @@ export const execute = async function(interaction) {
 	if (!PlayerStore.has(releasePath)) PlayerStore.set(releasePath, 0);
 	PlayerStore.set(releasePath, PlayerStore.get(releasePath) +1);
 
-
 	//send monster message
 	interaction.reply('` '+interaction.user.username+' chipped and released a '+monster.name+'. `');
 
@@ -58,5 +57,5 @@ export const execute = async function(interaction) {
 	// else MonsterGameConfig.set(monsterReleasedPath, MonsterGameConfig.get(monsterReleasedPath) + 1);
 	// return;
 
-    spawn(monsterId, interaction.channelId, true);
+    spawn(monsterId, interaction.channelId, interaction.user.id);
 }
