@@ -21,7 +21,7 @@ Object.keys(monsters).forEach(monsterId => {
 	MONSTERS[monsterId] = monsters[monsterId];
 	MONSTERS[monsterId].id = monsterId;
 	
-	monstersAutocomplete.push({name: monsterId, value: monsterId});
+	//monstersAutocomplete.push({name: monsterId, value: monsterId});
 	monstersAutocomplete.push({name: MONSTERS[monsterId].name, value: monsterId});
 });
 
