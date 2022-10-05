@@ -1,12 +1,12 @@
 import removeMonsterMessage from '../utilities/remove-message.js';
-import { MonsterGameConfig } from '../bot.js';
+import { MonsterGameState } from '../bot.js';
 
 export const execute = function (reaction, user) {
 	//exit if the reaction wasn't to the active monster message
-	if (reaction.message.id !== MonsterGameConfig.get('activeMonster')) return;
+	if (reaction.message.id !== MonsterGameState.get('activeMonster')) return;
  
 	let uName = user.username.toUpperCase();
-	let mName =  MonsterGameConfig.get('activeMonsterName').toUpperCase();
+	let mName =  MonsterGameState.get('activeMonsterName').toUpperCase();
 
 	//send long text
 	if (Math.random() < 0.02)

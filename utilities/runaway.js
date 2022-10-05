@@ -1,42 +1,26 @@
-import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
+import { MonsterGameState, MonsterGameClient } from '../bot.js';
 import { MonsterStore } from '../monsters.js';
-import randomElement from './random-element.js';
 import removeMonsterMessage from './remove-message.js';
+import { getResponseText } from "../utilities/response-text.js";
 
 export default function runAway() {
 	console.log('runaway')
-	if (!MonsterGameConfig.get('activeMonster')) return;
+	if (!MonsterGameState.get('activeMonster')) return;
 
-	let mName =  MonsterGameConfig.get('activeMonsterName');
-	let monsterId = MonsterGameConfig.get('activeMonsterId');
-	let channelid = MonsterGameConfig.get('activeMonsterChannel');
-	let chipped = MonsterGameConfig.get('activeChipped');
+	let mName =  MonsterGameState.get('activeMonsterName');
+	let monsterId = MonsterGameState.get('activeMonsterId');
+	let channelid = MonsterGameState.get('activeMonsterChannel');
+	let chipped = MonsterGameState.get('activeChippedUserId').length == 18;
 
 	let text;
 	if (chipped) {
-		text = randomElement([
-			'The released '+mName+' scampered off.',
-			'The released '+mName+' ran off.',
-			'The released '+mName+' went happily on it\'s way.',
-		]);
+		text = getResponseText('released','n/a',mName);
 		let monsterReleasedPath = monsterId+'.released';
 		if (!MonsterStore.has(monsterReleasedPath)) MonsterStore.set(monsterReleasedPath, 1);
 		else MonsterStore.set(monsterReleasedPath, MonsterStore.get(monsterReleasedPath) + 1);
 	}
 	else {
-		text = randomElement([
-			'The wild '+mName+' got spooked and ran off!',
-			'The wild '+mName+' wandered off...',
-			'The wild '+mName+' wandered away...',
-			'The wild '+mName+' walked away...',
-			'The wild '+mName+' walked off...',
-			'The wild '+mName+' zipped off into the distance!',
-			'The wild '+mName+' skeddaddled.',
-			'The wild '+mName+' disappeared...',
-			'The wild '+mName+' was gone without a trace...',
-			'The wild '+mName+' sauntered off...',
-			'The wild '+mName+' left...'
-		]);
+		text = getResponseText('leave','n/a',mName);
 	}
 	
 

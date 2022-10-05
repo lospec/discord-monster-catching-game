@@ -1,6 +1,5 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 import runAway from "../utilities/runaway.js";
-import { MonsterGameConfig } from "../bot.js";
 import spawn from '../utilities/spawn.js';
 import { MonsterStore } from '../monsters.js';
 import { PlayerStore } from '../players.js';
@@ -49,13 +48,6 @@ export const execute = async function(interaction) {
 	interaction.reply('` '+interaction.user.username+' chipped and released a '+monster.name+'. `');
 
 	console.log('SPAWNING MONSTER ',monster.name);
-
-	// TEMP PATCH TO PREVENT THEM FROM BEING RELEASED TO OTHER PLAYERS SINCE ITS BROKEN
-			//increase the released monsters count
-	// let monsterReleasedPath = 'monsters.'+monsterId+'.released';
-	// if (!MonsterGameConfig.has(monsterReleasedPath)) MonsterGameConfig.set(monsterReleasedPath, 1);
-	// else MonsterGameConfig.set(monsterReleasedPath, MonsterGameConfig.get(monsterReleasedPath) + 1);
-	// return;
 
     spawn(monsterId, interaction.channelId, interaction.user.id);
 }

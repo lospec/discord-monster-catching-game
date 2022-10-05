@@ -7,14 +7,15 @@ import { REST } from '@discordjs/rest';
 import { Routes as DiscordRestRoutes } from 'discord-api-types/v9';
 import { Store } from 'data-store';
 import glob from 'glob';
-import { MONSTERS, monstersAutocomplete } from './monsters.js';
+import { monstersAutocomplete } from './monsters.js';
 import { playersAutocomplete } from './players.js';
 
 
 dotenv.config();
 const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_BOT_TOKEN);
 
-export const MonsterGameConfig = new Store({ path: './monster-catching-game-data.json' });
+export const MonsterGameConfig = new Store({ path: './_data/config.json' });
+export const MonsterGameState = new Store({ path: './_data/game-state.json' });
 
 
 //load commands

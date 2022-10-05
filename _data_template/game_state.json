@@ -1,0 +1,7 @@
+{
+	"enabled": true,
+	"activeMonster": false,
+	"activeMonsterName": "name will be put here",
+	"activeMonsterId": "id will be put here",
+	"activeChippedUserId": false
+}

@@ -1,21 +1,12 @@
 import fs from 'fs';
-import { MonsterGameConfig } from "../bot.js";
+import { MonsterGameConfig, MonsterGameState } from "../bot.js";
 import { rarestRarity } from "../monsters.js";
-import randomElement from "../utilities/random-element.js";
 import getRarity from "../utilities/calculate-rarity.js";
 import removeMonsterMessage from "../utilities/remove-message.js";
 import { PlayerStore } from "../players.js";
+import { getResponseText } from "../utilities/response-text.js";
 
-//load text data from files
 const INTROTEXT = '```' + fs.readFileSync('_text/help.txt', 'utf8') + '```';
-const RESPONSES = {};
-['ball-missed-leave', 'ball-missed-stay', 'ball-missed-dodged', 'caught-wild', 'caught-chipped']
-.forEach(r => RESPONSES[r] = fs.readFileSync('_text/response-'+r+'.txt', 'utf8').split(/[\r\n]+/));
-
-//constants
-const GANGS = fs.readFileSync('_text/gang-names.txt', 'utf8').split(/[\r\n]+/);
-const RAN_AWAY_PHRASES = fs.readFileSync('_text/ran-away-phrases.txt', 'utf8').split(/[\r\n]+/);
-const BALL_NAME = MonsterGameConfig.get('ballName') || 'BALL';
 
 //reaction
 export const execute = function (reaction, user) {
@@ -24,11 +15,11 @@ export const execute = function (reaction, user) {
 		return newUserSignup(reaction,user);
 
 	//exit if the reaction wasn't to the active monster message
-	let activeMonster = MonsterGameConfig.get('activeMonster');
+	let activeMonster = MonsterGameState.get('activeMonster');
 	if (reaction.message.id !== activeMonster) return 'CONTINUE';
-	let mName =  MonsterGameConfig.get('activeMonsterName').toUpperCase();
-	let mChip =  MonsterGameConfig.get('activeChippedUserId');
-	let mId =  MonsterGameConfig.get('activeMonsterId');
+	let mName =  MonsterGameState.get('activeMonsterName').toUpperCase();
+	let mChip =  MonsterGameState.get('activeChippedUserId');
+	let mId =  MonsterGameState.get('activeMonsterId');
 	let uName = user.username.toUpperCase();
 
 	const Ball = MonsterGameConfig.get('reactionEmojis.ball');
@@ -67,7 +58,7 @@ export const execute = function (reaction, user) {
 				text = getResponseText('ball-missed-stay', uName, mName);
 			} else {
 				removeMonsterMessage();
-				text = text = getResponseText('ball-missed-leave', uName, mName);
+				text = getResponseText('ball-missed-leave', uName, mName);
 			}
 
 			//send message
@@ -92,7 +83,7 @@ export const execute = function (reaction, user) {
 			} else //normal catch
 				reaction.message.channel.send(Ball+' ` ' + getResponseText('caught-wild', uName, mName)+' `');
 
-			let monsterPath = user.id+'.'+MonsterGameConfig.get('activeMonsterId')+'.owned';
+			let monsterPath = user.id+'.'+MonsterGameState.get('activeMonsterId')+'.owned';
 
 			//save - create monster if not existant, otherwise increment
 			if (!PlayerStore.has(monsterPath))	PlayerStore.set(monsterPath, 1);
@@ -106,7 +97,7 @@ function newUserSignup (reaction, user) {
 	reaction.message.channel.guild.members.fetch(user.id)
 		.then(guildMember=> {
 			//give user role base on matched emoji
-			guildMember.roles.add(MonsterGameConfig.get('playerRoleId'))
+			guildMember.roles.add(MonsterGameState.get('playerRoleId'))
 				.then(e=> {
 					console.log({module: 'role manager'},'GRANTED',user.username.toUpperCase(),'RESEARCHERS LICENCE');
 					user.send(INTROTEXT);
@@ -117,11 +108,3 @@ function newUserSignup (reaction, user) {
         console.log('added user ', user.id, ' to lozpekamon');
 }
 
-function getResponseText(responseSet, userName, monsterName) {
-	return randomElement(RESPONSES[responseSet])
-		.replace(/%M/g, monsterName)
-		.replace(/%U/g, userName)
-		.replace(/%G/g, randomElement(GANGS))
-		.replace(/%B/g, BALL_NAME)
-		.replace(/%R/g, randomElement(RAN_AWAY_PHRASES) || 'ran')
-}

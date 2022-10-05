@@ -1,5 +1,4 @@
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterGameConfig } from '../bot.js';
 import { MonsterStore } from '../monsters.js';
 
 export const config = {

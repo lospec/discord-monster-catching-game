@@ -1,4 +1,4 @@
-import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
+import { MonsterGameConfig, MonsterGameState, MonsterGameClient } from '../bot.js';
 import { setRunaway, MonsterStore } from '../monsters.js';
 import removeMonsterMessage from '../utilities/remove-message.js';
 import randomElement from './random-element.js';
@@ -22,11 +22,11 @@ export default function spawn(spawnId, channelId, chippedUserId=false) {
 
             //send the monster
             channel.send(monster.emoji).then(monsterMessage => {
-                MonsterGameConfig.set('activeMonster',monsterMessage.id);
-                MonsterGameConfig.set('activeMonsterName',monster.name);
-                MonsterGameConfig.set('activeMonsterId', spawnId);
-                MonsterGameConfig.set('activeMonsterChannel',monsterSendChannel);
-                MonsterGameConfig.set('activeChippedUserId', chippedUserId);
+                MonsterGameState.set('activeMonster',monsterMessage.id);
+                MonsterGameState.set('activeMonsterName',monster.name);
+                MonsterGameState.set('activeMonsterId', spawnId);
+                MonsterGameState.set('activeMonsterChannel',monsterSendChannel);
+                MonsterGameState.set('activeChippedUserId', chippedUserId);
                 
                 //send monster message
                 if (!chippedUserId) {

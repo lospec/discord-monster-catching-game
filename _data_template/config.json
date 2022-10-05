@@ -1,5 +1,4 @@
 {
-	"enabled": true,
 	"channel": "discord channel id",
 	"adminChannel": "discord channel id that can run admin commands",
 	"signupMessageId": "id of a message that the user can react to to sign up",
@@ -10,11 +9,6 @@
 	"command": "(!monstercatchinggame|!mcg)",
 	"appearenceChance": 0.8,
 	"cooldown": 3,
-	"activeMonster": "id of the message of the current wild monster",
-	"activeMonsterName": "current wild monster's name",
-	"activeMonsterId": "current wild monster's id number",
-	"activeMonsterChannel": "the channel in which the current wild monster message was sent",
-	"activeChipped": false,
 	"serverGuildId": "your discord server id",
 	"emojiServerId": "the discord server the emojis should be added to (can be same as above)",
 	"habitats": ["Forest","Ocean","Sky"],

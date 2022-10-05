@@ -1,15 +1,15 @@
-import { MonsterGameConfig, MonsterGameClient } from "../bot.js";
+import { MonsterGameState, MonsterGameClient } from "../bot.js";
 import { runawayTimer } from '../monsters.js';
 
 export default function removeMonsterMessage(caught) {
-    if (!MonsterGameConfig.get('activeMonster')) return;
+    if (!MonsterGameState.get('activeMonster')) return;
 
-	let channelid = MonsterGameConfig.get('activeMonsterChannel');
-	let messageid = MonsterGameConfig.get('activeMonster')
+	let channelid = MonsterGameState.get('activeMonsterChannel');
+	let messageid = MonsterGameState.get('activeMonster')
 
 	//reset active monster
-	MonsterGameConfig.set('activeMonster',false);
-	MonsterGameConfig.set('activeChippedUserId',false);
+	MonsterGameState.set('activeMonster',false);
+	MonsterGameState.set('activeChippedUserId',false);
 	clearTimeout(runawayTimer);
 
 	console.log('deleting message',channelid,messageid)
