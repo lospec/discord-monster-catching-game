@@ -1,5 +1,8 @@
 {
     "a discord player's id": {
+      "team": [],
+      "pc": [],
+      "dex": {
         "1": {
           "owned": 22,
           "released": 15
@@ -8,5 +11,6 @@
           "owned": 10,
           "released": 10
         }
+      }
     }
 }

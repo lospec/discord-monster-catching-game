@@ -6,7 +6,17 @@
     "id": "1",
     "description": "A yellow face with simple, open eyes and a broad, open smile, showing upper teeth on most platforms. Often conveys general happiness and good-natured amusement.",
     "type": "emoji",
-    "habitat": "gamerland"
+    "habitat": "gamerland",
+    "stats": {
+      "maxHealth": 100,
+      "minHealth": 0,
+      "maxAttack": 100,
+      "minAttack": 0,
+      "maxDefense": 100,
+      "minDefense": 0,
+      "maxSpeed": 100,
+      "minSpeed": 0
+    }
   },
   "15": {
     "name": "Imp",
@@ -32,4 +42,4 @@
     "artist": "discord",
     "id": "777"
   }
-  }
+}
