@@ -1,14 +1,12 @@
 import { MonsterStore } from "../monsters.js";
+import randomElement from "./random-element.js";
 
 export class Monster {
-    constructor(id, name, type, health, attack, defense, speed, level) {
+    constructor(id, name, type, stats, level) {
         this.id = id;
         this.monName = name;
         this.type = type;
-        this.health = health;
-        this.attack = attack;
-        this.defense = defense;
-        this.speed = speed;
+        this.stats = stats;
         this.level = level;
     }
 
@@ -17,22 +15,35 @@ export class Monster {
         return new Monster(elems[0], elems[1], elems[2], elems[3], elems[4], elems[5], elems[6], elems[7]);
     }
 
-    //TODO: Skeddles figure out how stats are rolled
     static rollNew(monsterId, name) {
-        let monster = MonsterStore.get(monsterId+".stats");
-        let health = Math.floor(Math.random() * (monster.maxHealth - monster.minHealth) + monster.minHealth);
-        let attack = Math.floor(Math.random() * (monster.maxAttack - monster.minAttack) + monster.minAttack);
-        let defense = Math.floor(Math.random() * (monster.maxDefense - monster.minDefense) + monster.minDefense);
-        let speed = Math.floor(Math.random() * (monster.maxSpeed - monster.minSpeed) + monster.minSpeed);
-        return new Monster(monsterId, name, MonsterStore.get(monsterId+".type"), health, attack, defense, speed, 1);
+        let monster = MonsterStore.get(monsterId);
+		
+		let newStats = {};
+		Object.entries(monster.stats).forEach(s => newStats[s[0]] = s[1].min);
+
+		let statPointsPool = 8;
+		Object.values(monster.resistances).forEach(r => statPointsPool-=r);
+		Object.values(monster.weaknesses).forEach(w => statPointsPool+=w);
+		Object.values(newStats).forEach(s => statPointsPool-=s.min);
+
+		while (statPointsPool > 0) {
+			let stat = randomElement(monster.stats);
+			if (newStats[stat] + 1 > monster.stats[stat].max) continue;
+			newStats[stat]++;
+		}
+
+        return new Monster(monsterId, name, MonsterStore.get(monsterId+".type"), newStats, 1);
     }
 
     toString() {
-        return `${this.id},${this.monName},${this.type},${this.health},${this.attack},${this.defense},${this.speed},${this.level}`;
+        return `${this.id},${this.monName},${this.type},${this.level},${this.statsText}`;
     }
 
     output() {
-        return `${this.monName} is a ${this.type} type monster with ${this.health} health, ${this.attack} attack, ${this.defense} defense, and ${this.speed} speed.`;
+        return `${this.monName} is a ${this.type} type monster with ${this.statsText}.`;
     }
 
+	get statsText () {
+		return Object.entries(this.stats).map(s => s[0].toUpperCase()+': '+s[1]).join(' | ');
+	}
 }

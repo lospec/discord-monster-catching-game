@@ -8,15 +8,18 @@
     "type": "emoji",
     "habitat": "gamerland",
     "stats": {
-      "maxHealth": 100,
-      "minHealth": 0,
-      "maxAttack": 100,
-      "minAttack": 0,
-      "maxDefense": 100,
-      "minDefense": 0,
-      "maxSpeed": 100,
-      "minSpeed": 0
-    }
+      "health": {"min": 3, "max":8},
+      "attack": {"min": 1, "max":3},
+      "defense": {"min": 0, "max":0},
+      "speed": {"min": 3, "max":14}
+    },
+	"weaknesses": {
+		"fire": 3,
+		"slice": 2
+	},
+	"resistances": {
+		"blunt": 2
+	}
   },
   "15": {
     "name": "Imp",
