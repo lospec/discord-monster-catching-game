@@ -1,9 +1,9 @@
-import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterGameConfig } from '../bot.js';
-import { MonsterStore } from '../monsters.js';
+import { ApplicationCommandOptionType } from 'discordjs14';
+import { MonsterGameConfig } from '../../bot.js';
+import { MonsterStore } from '../../monsters.js';
 
 export const config = {
-	type: ApplicationCommandType.ChatInput,
+	type: ApplicationCommandOptionType.Subcommand,
 	name: 'set-monster-type',
 	description: 'set/update the type of a lozpekamon',
 	default_member_permissions: "0",

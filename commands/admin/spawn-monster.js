@@ -1,10 +1,10 @@
-import spawn from '../utilities/spawn.js';
-import pickRandom from '../utilities/pick-random.js';
-import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterGameConfig } from '../bot.js';
+import spawn from '../../utilities/spawn.js';
+import pickRandom from '../../utilities/pick-random.js';
+import { ApplicationCommandOptionType } from 'discordjs14';
+import { MonsterGameConfig } from '../../bot.js';
 
 export const config = {
-	type: ApplicationCommandType.ChatInput,
+	type: ApplicationCommandOptionType.Subcommand,
 	name: 'spawn-monster',
 	description: 'spawn a lozpekamon',
 	default_member_permissions: "0",

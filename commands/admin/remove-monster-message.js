@@ -1,8 +1,8 @@
-import removeMonsterMessage from '../utilities/remove-message.js';
-import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
+import removeMonsterMessage from '../../utilities/remove-message.js';
+import { ApplicationCommandOptionType } from 'discordjs14';
 
 export const config = {
-	type: ApplicationCommandType.ChatInput,
+	type: ApplicationCommandOptionType.Subcommand,
 	name: 'remove-monster-message',
 	description: 'Remove the active lozpekamon',
 	default_member_permissions: "0",

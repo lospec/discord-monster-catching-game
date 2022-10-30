@@ -1,7 +1,7 @@
 import { ApplicationCommandType } from 'discordjs14';
 
 export const config = {
-	name: 'dex', 
-	description: 'look up infomation about a lozpekamon',
+	name: 'admin', 
+	description: 'customize and manage your monster catching game',
 	type: ApplicationCommandType.ChatInput,
 };

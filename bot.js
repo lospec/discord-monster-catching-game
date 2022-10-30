@@ -16,16 +16,7 @@ const rest = new REST({ version: '9' }).setToken(process.env.DISCORD_BOT_TOKEN);
 
 export const MonsterGameConfig = new Store({ path: './_data/config.json' });
 export const MonsterGameState = new Store({ path: './_data/game-state.json' });
-
-
-//load commands
-let COMMANDS = {};
-glob.sync('./commands/*.js').forEach(command =>
-	import(command).then(obj => {
-		COMMANDS[obj.config.name] = obj;
-	})
-);
-export {COMMANDS as COMMANDS}
+const COMMANDS = {}
 
 //load reactions
 let REACTIONS = {};
@@ -44,8 +35,6 @@ glob.sync('./reactions/*.js').forEach(reactionFile =>
 );
 export {REACTIONS as REACTIONS}
 
-
-
 console.log('starting bot...')
 if (!process.env.DISCORD_BOT_TOKEN) {console.log('Your discord bot token was not found.'); process.exit();}
 
@@ -56,15 +45,35 @@ let client = new Client({
 });
 export const MonsterGameClient = client;
 // When the client is ready, run this code (only once)
-client.once('ready', () => {
+client.once('ready', async () => {
 	console.log('bot logged in');
 
-	//extract just the config for each command
-	let commandList = Object.values(COMMANDS).map(command => command.config);
+	let commandsList = [];
+	let commandFileList = glob.sync('./commands/*.js')
+	
+	for (let commandPath of commandFileList) {
+
+		let command = await import(commandPath);
+		commandsList.push(command.config);
+		COMMANDS[command.config.name] = command.execute;
+
+		let subcommandsFileList = glob.sync('./commands/'+command.config.name+'/*.js');
+		if (subcommandsFileList.length > 0) {
+			command.config.options = command.config.options || [];
+
+			for (let subcommandPath of subcommandsFileList) {
+				let subcommand = await import(subcommandPath);
+				command.config.options.push(subcommand.config);
+				COMMANDS[command.config.name+'.'+subcommand.config.name] = subcommand.execute;
+			}
+		}
+		console.log('loaded command',command.config.name,'with',subcommandsFileList.length,'subcommands')
+	}
+	console.log('done with commands?')
 
 	//load commands
-	rest.put(DiscordRestRoutes.applicationGuildCommands(client.user.id,MonsterGameConfig.get('serverGuildId')), {body: commandList} )
-		.then(e => console.log('loaded ',commandList.length,' commands'))
+	rest.put(DiscordRestRoutes.applicationGuildCommands(client.user.id,MonsterGameConfig.get('serverGuildId')), {body: commandsList} )
+		.then(e => console.log('loaded ',commandsList.length,' commands'))
 		.catch(err=> console.error('failed to load commands:',err))
 });
 
@@ -73,9 +82,11 @@ client.on('interactionCreate', async interaction => {
 	if (!interaction.isChatInputCommand()) return;
 	console.log('command run:', interaction.commandName)
 
-	if (COMMANDS[interaction.commandName])
-		COMMANDS[interaction.commandName].execute(interaction);
-	else console.log('command not recognized:', interaction.commandName)
+	let command = interaction.commandName;
+	let subcommand = interaction.options.getSubcommand(false);
+	
+	if (subcommand) COMMANDS[command+'.'+subcommand](interaction)
+	else COMMANDS[command](interaction);
 });
 
 //user reacted to a message
@@ -87,7 +98,6 @@ client.on('messageReactionAdd', async (reaction, user) => {
 		let emoji = reaction._emoji?.id ?? reaction.emoji.name;
 		console.log('reaction on message',reaction.message.id, 'with',emoji,!REACTIONS[emoji]?'(not matched)':REACTIONS[emoji].name);
 
-		
 		if (!REACTIONS[emoji]) return;
 
 		//emoji matched, execute reaction function

@@ -1,8 +1,8 @@
-import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterGameConfig } from '../bot.js';
+import { ApplicationCommandOptionType } from 'discordjs14';
+import { MonsterGameConfig } from '../../bot.js';
 
 export const config = {
-	type: ApplicationCommandType.ChatInput,
+	type: ApplicationCommandOptionType.Subcommand,
 	name: 'set-cooldown',
 	description: 'Set the new cooldown time between monster spawns',
 	default_member_permissions: "0",

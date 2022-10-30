@@ -1,11 +1,11 @@
-import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterGameConfig, REACTIONS } from '../bot.js';
+import { ApplicationCommandOptionType } from 'discordjs14';
+import { MonsterGameConfig, REACTIONS } from '../../bot.js';
 import glob from 'glob';
 
 const REACTION_NAMES = glob.sync('./reactions/*.js').map(r => r.replace('./reactions/','').replace('.js','')).map(h => ({name:h,value:h}));
 
 export const config = {
-	type: ApplicationCommandType.ChatInput,
+	type: ApplicationCommandOptionType.Subcommand,
 	name: 'set-reaction-emoji',
 	description: 'set the emoji used for specific reactions ',
 	default_member_permissions: "0",

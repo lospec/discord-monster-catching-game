@@ -1,11 +1,11 @@
-import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterStore } from '../monsters.js';
-import { getMonsterDescription, listAllMonsters } from '../utilities/monster-info.js';
+import { ApplicationCommandOptionType } from 'discordjs14';
+import { MonsterStore } from '../../monsters.js';
+import { getMonsterDescription, listAllMonsters } from '../../utilities/monster-info.js';
 
 export const config = {
 	name: 'admin-dex', 
 	description: 'look up all information about a monster',
-	type: ApplicationCommandType.ChatInput,
+	type: ApplicationCommandOptionType.Subcommand,
 	default_member_permissions: "0",
 	options: [{
 		name: 'monster',

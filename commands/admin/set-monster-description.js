@@ -1,8 +1,8 @@
-import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterStore } from '../monsters.js';
+import { ApplicationCommandOptionType } from 'discordjs14';
+import { MonsterStore } from '../../monsters.js';
 
 export const config = {
-	type: ApplicationCommandType.ChatInput,
+	type: ApplicationCommandOptionType.Subcommand,
 	name: 'set-monster-description',
 	description: 'change/set the description of a lozpekamon',
 	default_member_permissions: "0",

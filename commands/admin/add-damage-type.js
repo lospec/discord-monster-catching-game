@@ -1,9 +1,8 @@
-import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterStore } from '../monsters.js';
-import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
+import { ApplicationCommandOptionType } from 'discordjs14';
+import { MonsterGameConfig } from '../../bot.js';
 
 export const config = {
-	type: ApplicationCommandType.ChatInput,
+	type: ApplicationCommandOptionType.Subcommand,
 	name: 'add-damage-type',
 	description: 'add a new damage type to the game',
 	default_member_permissions: "0",

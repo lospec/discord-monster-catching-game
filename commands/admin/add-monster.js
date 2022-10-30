@@ -1,9 +1,9 @@
-import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
-import { MonsterGameConfig, MonsterGameClient } from '../bot.js';
-import { MonsterStore } from '../monsters.js';
+import { ApplicationCommandOptionType } from 'discordjs14';
+import { MonsterGameConfig, MonsterGameClient } from '../../bot.js';
+import { MonsterStore } from '../../monsters.js';
 
 export const config = {
-	type: ApplicationCommandType.ChatInput,
+	type: ApplicationCommandOptionType.Subcommand,
 	name: 'add-monster',
 	description: 'create a new lozpekamon',
 	default_member_permissions: "0",
