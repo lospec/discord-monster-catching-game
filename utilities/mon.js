@@ -1,18 +1,20 @@
 import { MonsterStore } from "../monsters.js";
+import { MonsterGameConfig } from '../bot.js';
 import randomElement from "./random-element.js";
 
 export class Monster {
-    constructor(id, name, type, stats, level) {
+    constructor(id, name, type, level, stats) {
         this.id = id;
         this.monName = name;
         this.type = type;
         this.stats = stats;
         this.level = level;
+		this.personality = randomElement(MonsterGameConfig.get('personalities'));
     }
 
     static fromString(str) {
         let elems = str.split(',');
-        return new Monster(elems[0], elems[1], elems[2], elems[3], elems[4], elems[5], elems[6], elems[7]);
+        return new Monster(elems[0], elems[1], elems[2], elems[4], elems[5], elems[6], elems[7], elems[8]);
     }
 
     static rollNew(monsterId, name) {
@@ -32,11 +34,11 @@ export class Monster {
 			newStats[stat]++;
 		}
 
-        return new Monster(monsterId, name, MonsterStore.get(monsterId+".type"), newStats, 1);
+        return new Monster(monsterId, name, MonsterStore.get(monsterId+".type"), 1, newStats);
     }
 
     toString() {
-        return `${this.id},${this.monName},${this.type},${this.level},${this.statsText}`;
+        return `${this.id},${this.monName},${this.type},${this.personality},${this.level},${this.statsText}`;
     }
 
     output() {
@@ -44,6 +46,11 @@ export class Monster {
     }
 
 	get statsText () {
+		console.log('get statstest:', {
+			'stats': this.stats,
+			'list': Object.entries(this.stats),
+
+		})
 		return Object.entries(this.stats).map(s => s[0].toUpperCase()+': '+s[1]).join(' | ');
 	}
 }

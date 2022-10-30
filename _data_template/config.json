@@ -13,6 +13,7 @@
 	"emojiServerId": "the discord server the emojis should be added to (can be same as above)",
 	"habitats": ["Forest","Ocean","Sky"],
 	"types": ["Fire", "Water", "Grass"],
+	"personalities": ["Happy", "Sad", "Angry"],
 	"bank": {
 		"isRemote": "false",
 		"hostname": "localhost",
