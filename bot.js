@@ -85,8 +85,14 @@ client.on('interactionCreate', async interaction => {
 	let command = interaction.commandName;
 	let subcommand = interaction.options.getSubcommand(false);
 	
-	if (subcommand) COMMANDS[command+'.'+subcommand](interaction)
-	else COMMANDS[command](interaction);
+	let commandName = command;
+	if (subcommand) commandName += '.'+subcommand;
+	
+	if (!COMMANDS[commandName]) return console.warn('command "'+commandName+'" not found');
+
+	//run the command
+	try { COMMANDS[commandName](interaction); }
+	catch (e) {console.log('failed to run "'+commandName+'"', e)}
 });
 
 //user reacted to a message
