@@ -9,6 +9,7 @@ import { Store } from 'data-store';
 import glob from 'glob';
 import { monstersAutocomplete } from './monsters.js';
 import { playersAutocomplete } from './players.js';
+import { movesAutoComplete } from './moves.js';
 
 
 dotenv.config();
@@ -133,6 +134,9 @@ MonsterGameClient.on('interactionCreate', interaction => {
 			break;
 		case 'player':
 			autocomplete = playersAutocomplete;
+			break;
+		case 'move':
+			autocomplete = movesAutoComplete;
 			break;
 		default:
 			return;

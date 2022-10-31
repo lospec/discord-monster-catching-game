@@ -19,48 +19,13 @@ export const config = {
 		required: true,
 		choices: Object.keys(MovesStore.get()).map(h => ({name:h,value:h}))
 	},{
-		name: 'damage-type',
-		type: ApplicationCommandOptionType.String,
-		description: 'The type of damage this move inflicts',
-		required: true,
-		choices: MonsterGameConfig.get('damageTypes').map(h => ({name:h,value:h}))
-	},{
 		name: 'unlock-level',
 		type: ApplicationCommandOptionType.Integer,
 		description: 'The monster level at which this move unlocks',
 		required: true,
 		min_value: 0,
 		max_value: 999
-	},{
-		name: 'target',
-		type: ApplicationCommandOptionType.String,
-		description: 'The target of this move\'s effect (defaults to opponent)',
-		choices: ['Opponent','Self','Both'].map(h => ({name:h,value:h}))
-	},{
-		name: 'duration',
-		type: ApplicationCommandOptionType.Integer,
-		description: 'The number of turns this turns effect is repeated (defaults to 1)',
-		min_value: 1,
-		max_value: 9
-	},{
-		name: 'damage',
-		type: ApplicationCommandOptionType.Integer,
-		description: 'The amount of damage this move causes each time it\'s inflicted (defaults to 0)',
-		min_value: 0,
-		max_value: 9
-	},{
-		name: 'speed',
-		type: ApplicationCommandOptionType.Integer,
-		description: 'The speed of this attack, which determines order (defaults to 1)',
-		min_value: 1,
-		max_value: 9,
-	},{
-		name: 'healing',
-		type: ApplicationCommandOptionType.Integer,
-		description: 'The amount of health this move heals (defaults to 0)',
-		min_value: 0,
-		max_value: 9
-	},
+	}
 ]}
 
 export const execute = async function (interaction) {
@@ -70,18 +35,12 @@ export const execute = async function (interaction) {
 
 		if (MovesStore.get(pool+'.'+name)) throw 'Move named '+name+' already exists!';
 		
-
 		//success
 		MovesStore.set(pool+'.'+name, {
-			damageType: interaction.options.getString('damage-type'),
 			unlockLevel: interaction.options.getString('unlockLevel'),
-			target: interaction.options.getString('target') || 'Opponent',
-			duration: interaction.options.getInteger('duration') || 1,
-			damage: interaction.options.getInteger('damage') || 0, 
-			speed: interaction.options.getInteger('speed') || 1,
-			healing: interaction.options.getInteger('healing') || 0,
+			effects: []
 		});
-		await interaction.reply({content: 'added  `'+name+'` move to `'+pool+'` pool', ephemeral: true });
+		await interaction.reply({content: 'added  `'+name+'` move to `'+pool+'` pool.\nNow you must add 1 or more move effects with "/admin add-move-effect". ', ephemeral: true });
 	} catch (err) {
 		console.log('Failed to set description:',err);
 		return interaction.reply({content: 'Failed to add move: \n ```'+err+'```', ephemeral: true });
