@@ -14,6 +14,8 @@
 	"habitats": ["Forest","Ocean","Sky"],
 	"types": ["Fire", "Water", "Grass"],
 	"personalities": ["Happy", "Sad", "Angry"],
+	"damageTypes": ["Fire","Water","Grass"],
+	"stats": ["health","defense","speed","attack"],
 	"bank": {
 		"isRemote": "false",
 		"hostname": "localhost",

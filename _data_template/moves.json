@@ -2,35 +2,26 @@
   "Fish": {
     "Jet": {
       "unlockLevel": 3,	
-      "damageType": "Water",
-      "target": "Opponent",
-      "duration": 1,
-      "damage": 5,
-      "speed": 4,
-      "healing": 0
+		"effects": [
+
+		]
     }
   },
   "Toothy": {
     "Bite": {
       "unlockLevel": 1,	
-      "damageType": "Fire",
-      "target": "Opponent",
-      "duration": 1,
-      "damage": 0,
-      "speed": 1,
-      "healing": 0
+		"effects": [
+			
+		]
     }
   },
   "Flying": {},
   "Firebreather": {
     "Flamethrower": {
 	  "unlockLevel": 5,	
-      "damageType": "Fire",
-      "target": "Opponent",
-      "duration": 1,
-      "damage": 5,
-      "speed": 4,
-      "healing": 0
+	  "effects": [
+			
+	]
     }
   }
 }
