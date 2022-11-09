@@ -55,7 +55,7 @@ export const execute = async function (interaction) {
 	
 	try {
 		let name = interaction.options.getString('name');
-		let id = interaction.options.getInteger('id');
+		let id = String(interaction.options.getInteger('id'));
 		let artist = interaction.options.getString('artist');
 		let sprite = interaction.options.getAttachment('sprite');
 		let habitat = interaction.options.getString('habitat');
@@ -65,8 +65,20 @@ export const execute = async function (interaction) {
 		if (id > 9999) throw 'ID numbers must be between 1 and 9999';
 		if (MonsterStore.get(id)) throw 'A monster with ID '+id+' already exists. Choose a different ID, or modify that monster.';
 
-		//add new emoji of monster
-		let guild = await MonsterGameClient.guilds.fetch(MonsterGameConfig.get('emojiServerId'))
+
+		let emojiServers = MonsterGameConfig.get('emoji-servers');
+		console.log('sss',emojiServers)
+		let selectedEmojiServer = Object.keys(emojiServers)
+			.map(id => emojiServers[id])
+			.find(async server => {
+				//add new emoji of monster
+				let guild = await MonsterGameClient.guilds.fetch(server.id);
+				let numberOfEmojis = Array.from(await (await guild.emojis.fetch()).keys()).length;
+				return numberOfEmojis < 50;
+			});
+		if (!selectedEmojiServer) throw 'Failed to find an empty emoji server. Add emoji servers with /admin add-emoji-server.'
+		
+		let guild = await MonsterGameClient.guilds.fetch(selectedEmojiServer.id);
 		let newEmojiName = id+'_'+name.replace(/\s/g,'');
 		let newEmoji = await guild.emojis.create({ attachment: sprite.url, name:  newEmojiName});
 
@@ -83,7 +95,7 @@ export const execute = async function (interaction) {
 		MonsterStore.set(id, newMonster);
 
 		//success
-		await interaction.reply({content: 'Monster successfully added.', ephemeral: true });
+		await interaction.reply({content: 'Monster **#'+id+' '+name.toUpperCase()+'** successfully added. [emoji server: '+selectedEmojiServer.name+':'+selectedEmojiServer.id+']', ephemeral: true });
 
 	} catch (err) {
 		console.log('Failed to add monster:',err);

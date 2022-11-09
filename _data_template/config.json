@@ -10,7 +10,12 @@
 	"appearenceChance": 0.8,
 	"cooldown": 3,
 	"serverGuildId": "your discord server id",
-	"emojiServerId": "the discord server the emojis should be added to (can be same as above)",
+	"emoji-servers": {
+	  "your emoji server id": {
+		"name": "emoji server 1",
+		"full": false
+	  }
+	},
 	"habitats": ["Forest","Ocean","Sky"],
 	"types": ["Fire", "Water", "Grass"],
 	"personalities": ["Happy", "Sad", "Angry"],
