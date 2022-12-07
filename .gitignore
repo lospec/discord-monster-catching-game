@@ -5,3 +5,4 @@ monster-catching-game-data.json
 * copy.*
 _ignore
 _data/
+tests/_test-coverage/
