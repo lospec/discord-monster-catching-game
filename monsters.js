@@ -21,8 +21,18 @@ export class Monster {
         this.id = id;
         this.monName = name;
         this.type = type;
-        this.stats = stats;
         this.level = level;
+
+
+		this.stats = {};
+		if (typeof stats == 'string') Object.assign(this.stats, JSON.parse(stats));
+		else if (typeof stats == 'object') Object.assign(this.stats, stats);
+			
+		//if any stats from MonsterGameConfig are missing throw error
+		Object.keys(MonsterGameConfig.get('stats')).forEach(s => {
+			if (!this.stats[s]) console.warn(`Monster ${this.monName} is missing stat ${s}`);
+		});
+
 		this.personality = randomElement(MonsterGameConfig.get('personalities'));
 		console.log('created monster', this)
     }
