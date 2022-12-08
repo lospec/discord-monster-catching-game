@@ -6,7 +6,7 @@
 export default {
 
 	// The glob patterns Jest uses to detect test files
-	testMatch: ["**/tests/**/*.js"],
+	testMatch: ["**/tests/*.js"],
 
 	// Automatically clear mock calls, instances and results before every test
 	clearMocks: true,
