@@ -28,28 +28,27 @@ Object.keys(monsters).forEach(monsterId => {
 export class Monster {
     constructor(id, name, type, personality, level, stats) {
         this.id = id;
+			if (!MONSTERS.hasOwnProperty(this.id)) throw new Error('invalid monster id');
         this.monName = name;
+			if (typeof this.monName !== 'string' || this.monName.length < 1) throw new Error('invalid name');
         this.type = type;
-        this.level = level;
-		this.stats = stats || {};
+			if (!MonsterGameConfig.get('types').includes(this.type)) throw new Error('invalid type');
 		this.personality = personality;
-
-		//if any stats from MonsterGameConfig are missing throw error
-		MonsterGameConfig.get('stats').forEach(s => {
-			if (!this.stats.hasOwnProperty(s)) throw new Error(`Monster ${this.monName} is missing stat ${s}`);
-		});
-
-		//if personalty doesnt match any in MonsterGameConfig throw error
-		if (!MonsterGameConfig.get('personalities').includes(this.personality)) throw new Error(`Monster ${this.monName} has invalid personality ${this.personality}`);
-    
-		//if level is not a number throw error
-		if (isNaN(this.level)) throw new Error(`Monster ${this.monName} has invalid level ${this.level}`);
-
-		//if type doesnt match any in MonsterGameConfig throw error
-		if (!MonsterGameConfig.get('types').includes(this.type)) throw new Error(`Monster ${this.monName} has invalid type ${this.type}`);
+			if (!MonsterGameConfig.get('personalities').includes(this.personality)) throw new Error('invalid personality');
+        this.level = level;
+			if (isNaN(this.level)) throw new Error('invalid level');
+		this.stats = stats || {};
+			MonsterGameConfig.get('stats').forEach(s => {
+				if (!this.stats.hasOwnProperty(s)) throw new Error('missing '+s+' stat');
+				if (isNaN(this.stats[s])) throw new Error('invalid '+s+' stat');
+			});
+			Object.keys(this.stats).forEach(s => {
+				if (!MonsterGameConfig.get('stats').includes(s)) throw new Error('invalid stat '+s);
+			});		
 	}
 
     static fromString(inputString) {
+		if (typeof inputString !== 'string') throw new Error('invalid input string');
 		let [id, name, type, personality, level, statsRaw] = inputString.split(',');
 
 		//parse stats
@@ -64,6 +63,7 @@ export class Monster {
 
     static rollNew(monsterId, name) {
         let monster = MonsterStore.get(String(monsterId));
+		if (!monster) throw new Error('invalid monster id');
 		let newStats = {};
 		Object.entries(monster.stats).forEach(s => newStats[s[0]] = s[1].min);
 		let statPointsPool = 8;

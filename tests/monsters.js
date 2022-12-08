@@ -56,7 +56,7 @@ describe('Monsters', function() {
 		}
 
 		for (let type in instantiationTypes) {
-			describe('can be instantiated with '+type, function() {
+			describe('instantiated with '+type, function() {
 				try {
 					let monster = instantiationTypes[type]();
 					it('is defined', function() {expect(monster).toBeDefined();});
@@ -70,6 +70,43 @@ describe('Monsters', function() {
 				}
 			});	
 		}
+
+		describe('to fail to instantiatiate with', function() {
+			test.each([
+				['rollNew with invalid id', ()=>Monster.rollNew('invalid','namey'), 'invalid monster id'],
+				['rollNew with invalid name', ()=>Monster.rollNew('1',''), 'invalid name'],
+				['rollNew with no arguments', ()=>Monster.rollNew(), 'invalid monster id'],
+				['new with no arguments', ()=>new Monster(), 'invalid monster id'],
+				['new with invalid id', ()=>new Monster('invalid','testname','Fish','Funny',1,{health:1,attack:1,defense:1,speed:1}), 'invalid monster id'],
+				['new with invalid name', ()=>new Monster('1','','Fish','Funny',1,{health:1,attack:1,defense:1,speed:1}), 'invalid name'],
+				['new with invalid type', ()=>new Monster('1','testname','invalid','Funny',1,{health:1,attack:1,defense:1,speed:1}), 'invalid type'],
+				['new with invalid personality', ()=>new Monster('1','testname','Fish','invalid',1,{health:1,attack:1,defense:1,speed:1}), 'invalid personality'],
+				['new with invalid level', ()=>new Monster('1','testname','Fish','Funny','invalid',{health:1,attack:1,defense:1,speed:1}), 'invalid level'],
+				['new with invalid stats', ()=>new Monster('1','testname','Fish','Funny',1,{health:'invalid',attack:1,defense:1,speed:1}), 'invalid health stat'],
+				['new with a missing stat', ()=>new Monster('1','testname','Fish','Funny',1,{attack:1,defense:1,speed:1}), 'missing health stat'],
+				['new with an extra stat', ()=>new Monster('1','testname','Fish','Funny',1,{health:1,attack:1,defense:1,speed:1,extra:1}), 'invalid stat extra'],
+				['fromString with no arguments', ()=>Monster.fromString(), 'invalid input string'],
+				['fromString with invalid id', ()=>Monster.fromString('invalid,testname,Fish,Funny,1,health:1|attack:1|defense:1|speed:1'), 'invalid monster id'],
+				['fromString with invalid name', ()=>Monster.fromString('1,,Fish,Funny,1,health:1|attack:1|defense:1|speed:1'), 'invalid name'],
+				['fromString with invalid type', ()=>Monster.fromString('1,testname,invalid,Funny,1,health:1|attack:1|defense:1|speed:1'), 'invalid type'],
+				['fromString with invalid personality', ()=>Monster.fromString('1,testname,Fish,invalid,1,health:1|attack:1|defense:1|speed:1'), 'invalid personality'],
+				['fromString with invalid level', ()=>Monster.fromString('1,testname,Fish,Funny,invalid,health:1|attack:1|defense:1|speed:1'), 'invalid level'],
+				['fromString with invalid stats', ()=>Monster.fromString('1,testname,Fish,Funny,1,health:invalid|attack:1|defense:1|speed:1'), 'invalid health stat'],
+				['fromString with a missing stat', ()=>Monster.fromString('1,testname,Fish,Funny,1,attack:1|defense:1|speed:1'), 'missing health stat'],
+				['fromString with an extra stat', ()=>Monster.fromString('1,testname,Fish,Funny,1,health:1|attack:1|defense:1|speed:1|extra:1'), 'invalid stat extra'],
+			])('%s', (title, initFunction, expectedError) => {
+				try {
+					initFunction();
+					expect('should not be reached').toBe('reached');
+				}
+				catch (e) {
+					if (!e.message == expectedError) console.error('Throw error did not match expected:',e);
+					expect(e.message).toBe(expectedError);
+				}
+			});
+		});
+
+
 	});
 
 	it('exports MONSTERS object', function() {
