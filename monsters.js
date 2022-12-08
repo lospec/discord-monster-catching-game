@@ -41,7 +41,13 @@ export class Monster {
 
 		//if personalty doesnt match any in MonsterGameConfig throw error
 		if (!MonsterGameConfig.get('personalities').includes(this.personality)) throw new Error(`Monster ${this.monName} has invalid personality ${this.personality}`);
-    }
+    
+		//if level is not a number throw error
+		if (isNaN(this.level)) throw new Error(`Monster ${this.monName} has invalid level ${this.level}`);
+
+		//if type doesnt match any in MonsterGameConfig throw error
+		if (!MonsterGameConfig.get('types').includes(this.type)) throw new Error(`Monster ${this.monName} has invalid type ${this.type}`);
+	}
 
     static fromString(inputString) {
 		let [id, name, type, personality, level, statsRaw] = inputString.split(',');
