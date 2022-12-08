@@ -2,7 +2,7 @@ import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs1
 import { MonsterStore } from '../../monsters.js';
 import { PlayerStore } from '../../players.js';
 import { getMonsterDescription, personalDex } from '../../utilities/monster-info.js';
-import { Monster } from '../../utilities/mon.js';
+import { Monster } from '../../monsters.js';
 
 export const config = {
 	name: 'transfer',
