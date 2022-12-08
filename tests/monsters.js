@@ -1,5 +1,5 @@
 import { TextInputStyle } from 'discordjs14';
-import {MonsterGameClient} from '../bot.js';
+import {MonsterGameClient, MonsterGameConfig} from '../bot.js';
 import {MONSTERS,Pool,monstersAutocomplete,Monster} from '../monsters.js';
 
 describe('Monsters', function() {
@@ -10,20 +10,19 @@ describe('Monsters', function() {
 			expect(Monster).toBeDefined();
 		});	
 
-		describe('instantiated with new', function() {
-			let monster = new Monster('1','test','test',1,{});
-			it('is defined', function() {expect(monster).toBeDefined();});
-		});
+		let instantiationTypes ={
+			'new': new Monster('1','test','test',1,{}),
+			'fromString': Monster.fromString('1,test,test,1,{}'),
+			'rollNew': Monster.rollNew(1,'namey'),
+		}
 
-		describe('instantiated with fromString', function() {
-			let monster = Monster.fromString('1,test,test,1,{}');
-			it('is defined', function() {expect(monster).toBeDefined();});
-		});
-
-		describe('instantiated with rollNew', function() {
-			let monster = Monster.rollNew(1,'namey');
-			it('is defined', function() {expect(monster).toBeDefined();});
-		});
+		for (let type in instantiationTypes) {
+			describe('instantiated with '+type, function() {
+				let monster = instantiationTypes[type];
+				it('is defined', function() {expect(monster).toBeDefined();});
+				it('has all stats', function() {expect(hasAllStats(monster)).toBe(true);});
+			});	
+		}
 	});
 
 	it('exports MONSTERS object', function() {
@@ -39,3 +38,10 @@ describe('Monsters', function() {
 		expect(monstersAutocomplete).toBeDefined();
 	});
 });
+
+function hasAllStats(monster) {
+	for (let stat of MonsterGameConfig.get('stats')) {
+		if (!monster.stats[stat]) return 'missing stat: '+stat;
+	}
+	return true;
+}
