@@ -22,15 +22,11 @@ export class Monster {
         this.monName = name;
         this.type = type;
         this.level = level;
-
-
-		this.stats = {};
-		if (typeof stats == 'string') Object.assign(this.stats, JSON.parse(stats));
-		else if (typeof stats == 'object') Object.assign(this.stats, stats);
+		this.stats = stats || {};
 			
 		//if any stats from MonsterGameConfig are missing throw error
-		Object.keys(MonsterGameConfig.get('stats')).forEach(s => {
-			if (!this.stats[s]) console.warn(`Monster ${this.monName} is missing stat ${s}`);
+		MonsterGameConfig.get('stats').forEach(s => {
+			if (!this.stats.hasOwnProperty(s)) throw new Error(`Monster ${this.monName} is missing stat ${s}`);
 		});
 
 		this.personality = randomElement(MonsterGameConfig.get('personalities'));
@@ -38,7 +34,16 @@ export class Monster {
     }
 
     static fromString(str) {
-		let [id, name, type, level, stats] = str.split(',');
+		let [id, name, type, level, statsRaw] = str.split(',');
+
+		//parse stats
+		let stats = {};
+		statsRaw.split('|').forEach(s => {
+			let [stat, value] = s.split(':');
+			stats[stat.toLowerCase()] = Number(value);
+		});
+		console.log('make stats:',stats)
+		
         return new Monster(id, name, type, level, stats);
     }
 
@@ -47,7 +52,7 @@ export class Monster {
 		console.log('rolling new monster:', monsterId, name, monster)
 		let newStats = {};
 		Object.entries(monster.stats).forEach(s => newStats[s[0]] = s[1].min);
-
+console.log('added stats:', newStats)
 		let statPointsPool = 8;
 		Object.values(monster.resistances).forEach(r => statPointsPool-=r);
 		Object.values(monster.weaknesses).forEach(w => statPointsPool+=w);
@@ -76,8 +81,10 @@ export class Monster {
 			'list': Object.entries(this.stats),
 
 		})
-		return Object.entries(this.stats).map(s => s[0].toUpperCase()+': '+s[1]).join(' | ');
+		return Object.entries(this.stats).map(s => s[0].toLowerCase()+':'+s[1]).join(' | ');
 	}
+
+
 }
 
 Object.keys(monsters).forEach(monsterId => {
