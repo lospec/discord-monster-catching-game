@@ -4,25 +4,45 @@ import {MONSTERS,Pool,monstersAutocomplete,Monster} from '../monsters.js';
 
 describe('Monsters', function() {
 
-	describe('MonsterStore data', function() {
+	describe('data', function() {
 		it('exists', function() {	expect(MonsterGameConfig).toBeDefined();});
 		it('to have at least one monster', function() {expect(Object.keys(MONSTERS).length).toBeGreaterThan(0);});
 		it('only contains numbers as keys', function() {expect(Object.keys(MONSTERS).every(k => !isNaN(k))).toBe(true);});
 	});
 
-	describe('Monster class', function() {
+	describe('config', function() {
+		it('exists', function() {	expect(MonsterGameConfig).toBeDefined();});
+		it('has a valid stats array', function() {
+			expect(MonsterGameConfig.get('stats')).toBeDefined();
+			expect(Array.isArray(MonsterGameConfig.get('stats'))).toBe(true);
+			expect(MonsterGameConfig.get('stats').length).toBeGreaterThan(0);
+		});
+		it('has a valid personalities array', function() {
+			expect(MonsterGameConfig.get('personalities')).toBeDefined();
+			expect(Array.isArray(MonsterGameConfig.get('personalities'))).toBe(true);
+			expect(MonsterGameConfig.get('personalities').length).toBeGreaterThan(0);
+		});
+		it('has a valid monster types array', function() {
+			expect(MonsterGameConfig.get('types')).toBeDefined();
+			expect(Array.isArray(MonsterGameConfig.get('types'))).toBe(true);
+			expect(MonsterGameConfig.get('types').length).toBeGreaterThan(0);
+		});
+	});
+		
+
+	describe('class', function() {
 		it('exists', function() {
 			expect(Monster).toBeDefined();
 		});	
 
 		let instantiationTypes ={
-			'new': ()=>new Monster('1','testname','testtype','testy',1,{health:1,attack:1,defense:1,speed:1}),
-			'fromString': ()=>Monster.fromString('1,testname,testtype,testy,1,health:1|attack:1|defense:1|speed:1'),
+			'new': ()=>new Monster('1','testname','testtype','Funny',1,{health:1,attack:1,defense:1,speed:1}),
+			'fromString': ()=>Monster.fromString('1,testname,testtype,Funny,1,health:1|attack:1|defense:1|speed:1'),
 			'rollNew': ()=>Monster.rollNew(1,'namey'),
 		}
 
 		for (let type in instantiationTypes) {
-			describe('instantiated with '+type, function() {
+			describe('can be instantiated with '+type, function() {
 				try {
 					let monster = instantiationTypes[type]();
 					it('is defined', function() {expect(monster).toBeDefined();});
@@ -35,6 +55,7 @@ describe('Monsters', function() {
 						expect(hasAllStats(monster2)).toBe(true);
 						expect(monster.personality).toBeDefined();
 						expect([monster,monster2].every(m => Object.keys(m.stats).every(stat => m.stats[stat] == monster2.stats[stat]))).toBe(true);
+						console.log('monster2',monster2);
 					});
 				}
 				catch (e) {

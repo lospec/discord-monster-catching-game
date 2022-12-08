@@ -33,18 +33,18 @@ export class Monster {
         this.level = level;
 		this.stats = stats || {};
 		this.personality = personality;
-			console.log('stats:',stats)
+
 		//if any stats from MonsterGameConfig are missing throw error
 		MonsterGameConfig.get('stats').forEach(s => {
 			if (!this.stats.hasOwnProperty(s)) throw new Error(`Monster ${this.monName} is missing stat ${s}`);
 		});
 
-		console.log('created monster', this)
+		//if personalty doesnt match any in MonsterGameConfig throw error
+		if (!MonsterGameConfig.get('personalities').includes(this.personality)) throw new Error(`Monster ${this.monName} has invalid personality ${this.personality}`);
     }
 
     static fromString(inputString) {
 		let [id, name, type, personality, level, statsRaw] = inputString.split(',');
-		console.log('parsing monster:', {id, name, type, personality,  level, statsRaw, inputString});
 
 		//parse stats
 		let stats = {};
@@ -52,17 +52,14 @@ export class Monster {
 			let [stat, value] = s.split(':');
 			stats[stat.toLowerCase()] = Number(value);
 		});
-		console.log('made stats:',stats)
 		
         return new Monster(id, name, type, personality, level, stats);
     }
 
     static rollNew(monsterId, name) {
         let monster = MonsterStore.get(String(monsterId));
-		console.log('rolling new monster:', monsterId, name, monster)
 		let newStats = {};
 		Object.entries(monster.stats).forEach(s => newStats[s[0]] = s[1].min);
-console.log('added stats:', newStats)
 		let statPointsPool = 8;
 		Object.values(monster.resistances).forEach(r => statPointsPool-=r);
 		Object.values(monster.weaknesses).forEach(w => statPointsPool+=w);
@@ -76,7 +73,7 @@ console.log('added stats:', newStats)
 
 		let personality = randomElement(MonsterGameConfig.get('personalities'));
 
-        return new Monster(monsterId, name, personality, MonsterStore.get(monsterId+".type"), 1, newStats);
+        return new Monster(monsterId, name, MonsterStore.get(monsterId+".type"),personality, 1, newStats);
     }
 
     toString() {
