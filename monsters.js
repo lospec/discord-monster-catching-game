@@ -53,6 +53,7 @@ export class Monster {
 
 		//parse stats
 		let stats = {};
+		if (typeof statsRaw !== 'string') throw new Error('no stats found');
 		statsRaw.split('|').forEach(s => {
 			let [stat, value] = s.split(':');
 			stats[stat.toLowerCase()] = Number(value);

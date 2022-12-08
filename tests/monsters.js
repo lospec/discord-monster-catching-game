@@ -85,6 +85,7 @@ describe('Monsters', function() {
 				['new with invalid stats', ()=>new Monster('1','testname','Fish','Funny',1,{health:'invalid',attack:1,defense:1,speed:1}), 'invalid health stat'],
 				['new with a missing stat', ()=>new Monster('1','testname','Fish','Funny',1,{attack:1,defense:1,speed:1}), 'missing health stat'],
 				['new with an extra stat', ()=>new Monster('1','testname','Fish','Funny',1,{health:1,attack:1,defense:1,speed:1,extra:1}), 'invalid stat extra'],
+				['new with no stats', ()=>new Monster('1','testname','Fish','Funny',1), 'missing health stat'],
 				['fromString with no arguments', ()=>Monster.fromString(), 'invalid input string'],
 				['fromString with invalid id', ()=>Monster.fromString('invalid,testname,Fish,Funny,1,health:1|attack:1|defense:1|speed:1'), 'invalid monster id'],
 				['fromString with invalid name', ()=>Monster.fromString('1,,Fish,Funny,1,health:1|attack:1|defense:1|speed:1'), 'invalid name'],
@@ -94,13 +95,14 @@ describe('Monsters', function() {
 				['fromString with invalid stats', ()=>Monster.fromString('1,testname,Fish,Funny,1,health:invalid|attack:1|defense:1|speed:1'), 'invalid health stat'],
 				['fromString with a missing stat', ()=>Monster.fromString('1,testname,Fish,Funny,1,attack:1|defense:1|speed:1'), 'missing health stat'],
 				['fromString with an extra stat', ()=>Monster.fromString('1,testname,Fish,Funny,1,health:1|attack:1|defense:1|speed:1|extra:1'), 'invalid stat extra'],
+				['fromString with no stats', ()=>Monster.fromString('1,testname,Fish,Funny,1'), 'no stats found'],
 			])('%s', (title, initFunction, expectedError) => {
 				try {
 					initFunction();
 					expect('should not be reached').toBe('reached');
 				}
 				catch (e) {
-					if (!e.message == expectedError) console.error('Throw error did not match expected:',e);
+					if (!e.message == expectedError) console.error('Thrown error did not match expected:',e);
 					expect(e.message).toBe(expectedError);
 				}
 			});
