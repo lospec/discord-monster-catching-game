@@ -7,6 +7,19 @@ describe('Monsters', function() {
 	describe('data', function() {
 		it('exists', function() {	expect(MonsterGameConfig).toBeDefined();});
 		it('to have at least one monster', function() {expect(Object.keys(MONSTERS).length).toBeGreaterThan(0);});
+		describe('to have valid first monster', function() {
+			let firstMonster = MONSTERS[Object.keys(MONSTERS)[0]];
+			it('exists', function() {expect(firstMonster).toBeDefined();});
+			it('has a valid type', function() {expect(MonsterGameConfig.get('types').includes(firstMonster.type)).toBe(true);});
+			it('has a valid habitat', function() {expect(MonsterGameConfig.get('habitats').includes(firstMonster.habitat)).toBe(true);});
+			it('has valid stats', function() {
+				expect(Object.keys(firstMonster.stats).every(s => {
+					let stat = firstMonster.stats[s];
+					return typeof stat.min == 'number' &&  typeof stat.max == 'number';
+				})).toBe(true);
+			});
+		});
+				
 		it('only contains numbers as keys', function() {expect(Object.keys(MONSTERS).every(k => !isNaN(k))).toBe(true);});
 	});
 
@@ -36,9 +49,10 @@ describe('Monsters', function() {
 		});	
 
 		let instantiationTypes ={
-			'new': ()=>new Monster('1','testname','testtype','Funny',1,{health:1,attack:1,defense:1,speed:1}),
-			'fromString': ()=>Monster.fromString('1,testname,testtype,Funny,1,health:1|attack:1|defense:1|speed:1'),
+			'new': ()=>new Monster('1','testname','Fish','Funny',1,{health:1,attack:1,defense:1,speed:1}),
+			'fromString': ()=>Monster.fromString('1,testname,Fish,Funny,1,health:1|attack:1|defense:1|speed:1'),
 			'rollNew': ()=>Monster.rollNew(1,'namey'),
+			'rollNew toString fromString': ()=>Monster.fromString(Monster.rollNew(1,'namey').toString()),
 		}
 
 		for (let type in instantiationTypes) {
@@ -47,16 +61,9 @@ describe('Monsters', function() {
 					let monster = instantiationTypes[type]();
 					it('is defined', function() {expect(monster).toBeDefined();});
 					it('has all stats', function() {expect(hasAllStats(monster)).toBe(true);});
-					it('has a personality', function() {expect(monster.personality).toBeDefined();});
-					it('can be exported toString, then instantiated again and has all stats', function() {
-						console.log('the monsters tostring:', monster.toString());
-						let monster2 = Monster.fromString(monster.toString());
-						expect(monster.toString()).toBe(monster2.toString());
-						expect(hasAllStats(monster2)).toBe(true);
-						expect(monster.personality).toBeDefined();
-						expect([monster,monster2].every(m => Object.keys(m.stats).every(stat => m.stats[stat] == monster2.stats[stat]))).toBe(true);
-						console.log('monster2',monster2);
-					});
+					it('has a valid personality', function() {expect(MonsterGameConfig.get('personalities').includes(monster.personality)).toBe(true);});
+					it('has a valid type', function() {expect(MonsterGameConfig.get('types').includes(monster.type)).toBe(true);});
+
 				}
 				catch (e) {
 					it('should not throw an error', function() {expect(e).toBeUndefined()});
