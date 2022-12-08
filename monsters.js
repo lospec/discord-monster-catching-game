@@ -3,6 +3,7 @@ import getRarity from './utilities/calculate-rarity.js';
 import runAway from './utilities/runaway.js';
 import { MonsterGameConfig } from './bot.js';
 import randomElement from "./utilities/random-element.js";
+import { typeOf } from 'data-store/utils.js';
 export const MonsterStore = new Store({ path: './_data/monster-data.json' });
 	console.log(MonsterStore)
 	const monsters = MonsterStore.get();
@@ -17,24 +18,25 @@ export const MONSTERS = {};
 export const monstersAutocomplete = [];
 
 export class Monster {
-    constructor(id, name, type, level, stats) {
+    constructor(id, name, type, personality, level, stats) {
         this.id = id;
         this.monName = name;
         this.type = type;
         this.level = level;
 		this.stats = stats || {};
-			
+		this.personality = personality;
+			console.log('stats:',stats)
 		//if any stats from MonsterGameConfig are missing throw error
 		MonsterGameConfig.get('stats').forEach(s => {
 			if (!this.stats.hasOwnProperty(s)) throw new Error(`Monster ${this.monName} is missing stat ${s}`);
 		});
 
-		this.personality = randomElement(MonsterGameConfig.get('personalities'));
 		console.log('created monster', this)
     }
 
-    static fromString(str) {
-		let [id, name, type, level, statsRaw] = str.split(',');
+    static fromString(inputString) {
+		let [id, name, type, personality, level, statsRaw] = inputString.split(',');
+		console.log('parsing monster:', {id, name, type, personality,  level, statsRaw, inputString});
 
 		//parse stats
 		let stats = {};
@@ -42,9 +44,9 @@ export class Monster {
 			let [stat, value] = s.split(':');
 			stats[stat.toLowerCase()] = Number(value);
 		});
-		console.log('make stats:',stats)
+		console.log('made stats:',stats)
 		
-        return new Monster(id, name, type, level, stats);
+        return new Monster(id, name, type, personality, level, stats);
     }
 
     static rollNew(monsterId, name) {
@@ -64,7 +66,9 @@ console.log('added stats:', newStats)
 			newStats[stat]++;
 		}
 
-        return new Monster(monsterId, name, MonsterStore.get(monsterId+".type"), 1, newStats);
+		let personality = randomElement(MonsterGameConfig.get('personalities'));
+
+        return new Monster(monsterId, name, personality, MonsterStore.get(monsterId+".type"), 1, newStats);
     }
 
     toString() {
@@ -81,7 +85,7 @@ console.log('added stats:', newStats)
 			'list': Object.entries(this.stats),
 
 		})
-		return Object.entries(this.stats).map(s => s[0].toLowerCase()+':'+s[1]).join(' | ');
+		return Object.entries(this.stats).map(s => s[0].toLowerCase()+':'+s[1]).join('|');
 	}
 
 
