@@ -4,6 +4,11 @@ import {MONSTERS,Pool,monstersAutocomplete,Monster} from '../monsters.js';
 
 describe('Monsters', function() {
 
+	describe('MonsterStore data', function() {
+		it('exists', function() {	expect(MonsterGameConfig).toBeDefined();});
+		it('to have at least one monster', function() {expect(Object.keys(MONSTERS).length).toBeGreaterThan(0);});
+		it('only contains numbers as keys', function() {expect(Object.keys(MONSTERS).every(k => !isNaN(k))).toBe(true);});
+	});
 
 	describe('Monster class', function() {
 		it('exists', function() {
@@ -22,11 +27,14 @@ describe('Monsters', function() {
 					let monster = instantiationTypes[type]();
 					it('is defined', function() {expect(monster).toBeDefined();});
 					it('has all stats', function() {expect(hasAllStats(monster)).toBe(true);});
+					it('has a personality', function() {expect(monster.personality).toBeDefined();});
 					it('can be exported toString, then instantiated again and has all stats', function() {
 						console.log('the monsters tostring:', monster.toString());
 						let monster2 = Monster.fromString(monster.toString());
 						expect(monster.toString()).toBe(monster2.toString());
 						expect(hasAllStats(monster2)).toBe(true);
+						expect(monster.personality).toBeDefined();
+						expect([monster,monster2].every(m => Object.keys(m.stats).every(stat => m.stats[stat] == monster2.stats[stat]))).toBe(true);
 					});
 				}
 				catch (e) {

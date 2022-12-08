@@ -16,6 +16,14 @@ export function setRunaway(length) {
 
 export const MONSTERS = {};
 export const monstersAutocomplete = [];
+Object.keys(monsters).forEach(monsterId => {
+	console.log(monsterId)
+	MONSTERS[monsterId] = monsters[monsterId];
+	MONSTERS[monsterId].id = monsterId;
+	
+	//monstersAutocomplete.push({name: monsterId, value: monsterId});
+	monstersAutocomplete.push({name: MONSTERS[monsterId].name, value: monsterId});
+});
 
 export class Monster {
     constructor(id, name, type, personality, level, stats) {
@@ -91,14 +99,6 @@ console.log('added stats:', newStats)
 
 }
 
-Object.keys(monsters).forEach(monsterId => {
-	console.log(monsterId)
-	MONSTERS[monsterId] = monsters[monsterId];
-	MONSTERS[monsterId].id = monsterId;
-	
-	//monstersAutocomplete.push({name: monsterId, value: monsterId});
-	monstersAutocomplete.push({name: MONSTERS[monsterId].name, value: monsterId});
-});
 
 export var Pool = [];
 Object.keys(monsters).forEach (id => {
