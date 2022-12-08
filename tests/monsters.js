@@ -41,7 +41,7 @@ describe('Monsters', function() {
 
 function hasAllStats(monster) {
 	for (let stat of MonsterGameConfig.get('stats')) {
-		if (!monster.stats[stat]) return 'missing stat: '+stat;
+		if (!monster.stats.hasOwnProperty(stat)) return 'missing stat: '+stat;
 	}
 	return true;
 }

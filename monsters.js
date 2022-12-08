@@ -24,6 +24,7 @@ export class Monster {
         this.stats = stats;
         this.level = level;
 		this.personality = randomElement(MonsterGameConfig.get('personalities'));
+		console.log('created monster', this)
     }
 
     static fromString(str) {
