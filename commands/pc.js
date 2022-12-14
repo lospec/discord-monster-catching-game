@@ -1,5 +1,5 @@
 import { PlayerStore } from "../players.js";
-import { Monster } from "../utilities/mon.js";
+import { Monster } from "../monsters.js";
 import { ApplicationCommandType, ApplicationCommandOptionType } from 'discordjs14';
 
 export const config = {

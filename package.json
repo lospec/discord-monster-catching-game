@@ -3,7 +3,8 @@
 	"version": "1.0.0",
 	"description": "a discord-based monster catching game engine",
 	"scripts": {
-		"start": "node bot.js"
+		"start": "node bot.js",
+		"test": "node --experimental-vm-modules node_modules/jest/bin/jest.js"
 	},
 	"main": "bot.js",
 	"repository": {
@@ -30,5 +31,8 @@
 		"dotenv": "^16.0.2",
 		"glob": "^8.0.3"
 	},
-	"type": "module"
+	"type": "module",
+	"devDependencies": {
+		"jest": "^29.3.1"
+	}
 }
