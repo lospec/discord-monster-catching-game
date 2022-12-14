@@ -26,7 +26,7 @@ Object.keys(monsters).forEach(monsterId => {
 });
 
 export class Monster {
-    constructor(id, name, type, personality, level, stats) {
+    constructor(id, name, type, personality, xp, stats) {
         this.id = id;
 			if (!MONSTERS.hasOwnProperty(this.id)) throw new Error('invalid monster id');
         this.monName = name;
@@ -35,8 +35,8 @@ export class Monster {
 			if (!MonsterGameConfig.get('types').includes(this.type)) throw new Error('invalid type');
 		this.personality = personality;
 			if (!MonsterGameConfig.get('personalities').includes(this.personality)) throw new Error('invalid personality');
-        this.level = level;
-			if (isNaN(this.level)) throw new Error('invalid level');
+        this.xp = xp;
+			if (isNaN(this.xp)) throw new Error('invalid xp');
 		this.stats = stats || {};
 			MonsterGameConfig.get('stats').forEach(s => {
 				if (!this.stats.hasOwnProperty(s)) throw new Error('missing '+s+' stat');
@@ -49,7 +49,7 @@ export class Monster {
 
     static fromString(inputString) {
 		if (typeof inputString !== 'string') throw new Error('invalid input string');
-		let [id, name, type, personality, level, statsRaw] = inputString.split(',');
+		let [id, name, type, personality, xp, statsRaw] = inputString.split(',');
 
 		//parse stats
 		let stats = {};
@@ -59,7 +59,7 @@ export class Monster {
 			stats[stat.toLowerCase()] = Number(value);
 		});
 		
-        return new Monster(id, name, type, personality, level, stats);
+        return new Monster(id, name, type, personality, xp, stats);
     }
 
     static rollNew(monsterId, name) {
@@ -84,7 +84,7 @@ export class Monster {
     }
 
     toString() {
-        return `${this.id},${this.monName},${this.type},${this.personality},${this.level},${this.statsText}`;
+        return `${this.id},${this.monName},${this.type},${this.personality},${this.xp},${this.statsText}`;
     }
 
     output() {
